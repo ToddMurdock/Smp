@@ -1,0 +1,69 @@
+/*
+.smp-button {
+  background-color: #f1f1f1;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  height: 2em;
+  outline: 0;
+}
+*/
+
+.smp-button::before {
+  margin-right: 0.3em;
+}
+
+.smp-button
+{
+	display: block;
+  font-family: Arial;
+	font-size: 1em;
+	/* text-transform: uppercase; */
+  outline: 0;
+	padding: 10px 15px;
+	color: #0070FF;
+	background-color: #fff;
+	/* background: -webkit-linear-gradient(#888, #555); */
+	/* background: linear-gradient(#888, #555); */
+	border: 0 none;
+	border-radius: 3px;
+	/* text-shadow: 0 -1px 0 #000; */
+	/* box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px rgba(0,0,0,0.6); */
+	cursor: pointer;
+	/*
+	-webkit-transition: all 150ms ease;
+	transition: all 150ms ease;
+	*/
+}
+/*
+.smp-button:hover, .smp-button:focus
+{
+	-webkit-animation: pulsate 1.2s linear infinite;
+	animation: pulsate 1.2s linear infinite;
+}
+	
+@-webkit-keyframes pulsate
+{
+	0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+	50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+	100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+}
+		
+@keyframes pulsate
+{
+	0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+	50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+	100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+}
+*/
+/*
+.smp-button:active
+{
+	color: #fff;
+	text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+	box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px rgba(0,0,0,0.9);
+	-webkit-transform: translateY(3px);
+	transform: translateY(3px);
+	-webkit-animation: none;
+	animation: none;
+}
+*/

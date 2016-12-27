@@ -1,0 +1,4 @@
+.smp-list div[draggable] {
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
