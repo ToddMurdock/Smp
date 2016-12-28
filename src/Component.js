@@ -134,6 +134,14 @@ class Component {
 
   /**
    * Public
+   * @param {String} cls
+   */
+  removeCls (cls) {
+    this._el.removeCls(cls);
+  }
+
+  /**
+   * Public
    */
   getBox () {
     return this._el.getBox();

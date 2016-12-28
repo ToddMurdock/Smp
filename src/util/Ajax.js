@@ -43,7 +43,7 @@
  *  - Passing a string instead of the params object has been removed!
  */
 class Ajax {
-  constructor (params, callback) {
+  request (params, callback) {
     // Any variable used more than once is var'd here because
     // minification will munge the variables whereas it can't munge
     // the object access.
@@ -105,7 +105,7 @@ class Ajax {
     return req;
   }
 
-  getRequest(cors) {
+  getRequest (cors) {
     // XDomainRequest is only way to do CORS in IE 8 and 9
     // But XDomainRequest isn't standards-compatible
     // Notably, it doesn't allow cookies to be sent or set by servers
@@ -120,7 +120,7 @@ class Ajax {
     }
   }
 
-  setDefault(obj, key, value) {
+  setDefault (obj, key, value) {
     obj[key] = obj[key] || value;
   }
 }

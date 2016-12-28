@@ -100,7 +100,7 @@ class Store {
     this.load(options);
   }
 
-  _onSearchComplete (response) {
+  _onLoadComplete (response) {
     let data = this._processResponse(response);
     this._emit('load', this, data);
   }
@@ -124,7 +124,7 @@ class Store {
     return responseData;
   }
 
-  _onSearchFailed () {
+  _onLoadFailed () {
     this._data = undefined;
     this._page = undefined;
     this._totalCount = 0;

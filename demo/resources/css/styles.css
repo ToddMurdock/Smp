@@ -1,0 +1,11 @@
+body {
+  font-family: Arial;
+}
+
+.toolbar {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.smp-card-item {
+  padding: 1em;
+}

@@ -49,6 +49,14 @@ class Element {
   }
 
   /**
+   * Public.
+   * @param {String} cls
+   */
+  removeCls (cls) {
+    Dom.removeCls(this.dom, cls);
+  }
+
+  /**
    * Public
    * @param {Number} [width]
    * @param {Number} [height]

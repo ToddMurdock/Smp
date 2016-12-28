@@ -90,6 +90,9 @@ class DragDrop {
   _addTouchListeners (source) {
     let el = source.getEl();
 
+    el.on('contextmenu', function (e) {
+      e.preventDefault();
+    });
     el.on('touchstart', this._onTouchStart.bind(this));
     el.on('touchmove', this._onTouchMove.bind(this));
     el.on('touchend', this._onTouchEnd.bind(this));
@@ -156,28 +159,46 @@ class DragDrop {
    * @param {TouchEvent} e
    */
   _onTouchStart (e) {
-    // if (e.target.getAttribute('draggable')) {
-    //   // this._timeoutId = setTimeout(myFunction, 1000);
-    //   this.delayedTouchMove = new DelayedTask(this._startTouchMove, this);
-    //   this.delayedTouchMove.delay(750, undefined, undefined, [e]);
-    // }
-
     if (e.target.getAttribute('draggable')) {
+      ////
+      this._touchStartTime = new Date().getTime(); 
+      this._touching = true;
+
+      if (!this._delayedCheckTouchHold) {
+        this._delayedCheckTouchHold = new DelayedTask(this._checkTouchHold, this);
+      }
+
+      this._delayedCheckTouchHold.delay(1000, undefined, undefined, [this._touchStartTime, e]);
+      ////
+
       // this.isDragging = true;
-      this._callDragSource(e);
+      // this._callDragSource(e);
     }
   }
 
-  // _startTouchMove (e) {
-  //   this.isDragging = true;
-  //   this._callDragSource(e);
-  // }
+  ////
+  _checkTouchHold (startTime, e) {
+    if (!this._moving && this._touching && this._touchStartTime == startTime) {
+      this._touchStartTime = 0;
+      this._moving = undefined;
+      this._onTouchHold(e);
+    }
+  }
+  ////
+
+  _onTouchHold (e) {
+    e.preventDefault();
+    this.isDragging = true;
+    this._callDragSource(e);
+  }
 
   /**
    * Private.
    * @param {TouchEvent} e
    */
   _onTouchMove (e) {
+    this._moving = true;
+
     if (this.isDragging && !this._ghost.isRendered()) {
       this._ghost.render(e.target);
     }
@@ -196,6 +217,11 @@ class DragDrop {
    * @param {TouchEvent} e
    */
   _onTouchEnd (e) {
+    ////
+    this._moving = undefined;
+    this._touching = undefined;
+    ////
+
     if (this.isDragging) {
       // Prevents scrolling during 'touchmove'
       e.preventDefault();
@@ -207,9 +233,7 @@ class DragDrop {
       this.isDragging = undefined;
 
       this._callDropTarget(e);
-    } // else {
-    //   this.delayedTouchMove.cancel();
-    // }
+    }
   }
 
   /**

@@ -80,6 +80,19 @@ class Dom {
   /**
    * Public.
    * @param {HTMLElement} element
+   * @param {String} cls
+   */
+  static removeCls (element, cls) {
+    let cs = element.classList;
+
+    if (cs.contains(cls)) {
+      cs.remove(cls);
+    }
+  }
+
+  /**
+   * Public.
+   * @param {HTMLElement} element
    */
   static getBox (element) {
     return element.getBoundingClientRect();

@@ -4,6 +4,21 @@ class Layout {
     this.isLayout = true;
   }
 
+  init (owner) {
+    this._owner = owner;
+  }
+
+  /**
+   * Private.
+   * @param {String} key
+   */
+  getConfig (key) {
+    return this._config.get(key);
+  }
+
+  /**
+   * Public.
+   */
   doLayout () {
     var owner = this._owner,
         layoutEl = owner.getLayoutEl(),
@@ -14,7 +29,7 @@ class Layout {
     this._setLayoutElCls(layoutEl);
 
     for (; i < len; i++) {
-      this._setItemCls(items[i]);
+      this._setItemCls(items[i], i);
     }
   }
 
@@ -22,9 +37,7 @@ class Layout {
    * Private.
    * @param {HTMLElement} layoutEl
    */
-  _setLayoutElCls (layoutEl) {
-    layoutEl.addCls('smp-flex');
-  }
+  // _setLayoutElCls (layoutEl) {}
 
   /**
    * Private.

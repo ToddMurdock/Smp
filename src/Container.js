@@ -18,7 +18,7 @@ class Container extends Component {
    */
   _initLayout () {
     this._layout = ComponentManager.create(this.getConfig('layout') || { type: 'layout' });
-    this._layout._owner = this;
+    this._layout.init(this);
   }
 
   /**
