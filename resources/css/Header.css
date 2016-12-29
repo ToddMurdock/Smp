@@ -1,0 +1,13 @@
+.smp-header {
+  background-color: #0070ff;
+  color: #fff;
+}
+
+.smp-header .smp-title {
+  padding: 1em;
+}
+
+.smp-header .smp-close {
+  cursor: pointer;
+  padding: 1em;
+}

@@ -9,7 +9,7 @@ class Button extends Component {
 
   constructor (config) {
     config.baseCls = 'smp-button';
-    config.renderTpl = '<button type="button" id="{id}" class="{cls}" style="{style}"><span class="icon fa {iconCls}"></span> <span class="text">{text}</span></button>';
+    config.renderTpl = '<button type="button" id="{id}" class="{cls}" style="{style}"><span class="icon {iconCls}"></span> <span class="text">{text}</span></button>';
 
     super(config);
     this.isButton = true;
@@ -66,13 +66,14 @@ class Button extends Component {
    */
   _getRenderData () {
     let data = super._getRenderData(),
-        configCls = this.getConfig('cls');
+        configCls = this.getConfig('cls'),
+        iconCls = this.getConfig('iconCls') || '';
 
     if (configCls) {
       data.cls += ' ' + configCls;
     }
 
-    data.iconCls = this.getConfig('iconCls') || '';
+    data.iconCls = iconCls;
     data.text = this.getConfig('text');
     return data;
   }

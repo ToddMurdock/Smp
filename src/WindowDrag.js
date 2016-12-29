@@ -2,12 +2,13 @@
  * jsfiddle.net/robertc/kKuqH/
  */
 class WindowDrag {
-  constructor (window) {
+  constructor (config) {
     let body;
 
-    this._dragEl = new Element(window._titleEl);
+    this._dragEl = config.dragEl;
+    this._window = config.window;
 
-    this._window = window;
+    this._dragEl.dom.setAttribute('draggable', true);
 
     if (Device.isDesktop()) {
       this._bodyEl = new Element(document.body);

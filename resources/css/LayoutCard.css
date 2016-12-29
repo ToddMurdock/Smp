@@ -13,7 +13,7 @@
 }
 
 .smp-card-active-item {
-  display: block;
+  display: flex;
 
   -webkit-animation: fadeInFromNone 0.7s ease-out;
   -moz-animation: fadeInFromNone 0.7s ease-out;
