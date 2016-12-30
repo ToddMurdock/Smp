@@ -295,7 +295,7 @@ class Binder {
       }
     }
 
-    if (comp.isContainer) {
+    if (comp.getLayoutItems && typeof comp.getLayoutItems === 'function') {
       items = comp.getLayoutItems();
       len = items.length;
       i = 0;

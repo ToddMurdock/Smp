@@ -3,6 +3,13 @@ class ViewController {
     this._config = new Config(config);
   }
 
+  /**
+   * TODO
+   * Template method.
+   * Called once all bindings are initialized.
+   */
+  // init () {}
+
   getConfig (key) {
     return this._config.get(key);
   }
@@ -16,7 +23,7 @@ class ViewController {
   }
 
   getView () {
-    this._config.get('view');
+    return this._config.get('view');
   }
 
   /**

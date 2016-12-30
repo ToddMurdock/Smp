@@ -1,13 +1,36 @@
 class Store {
+
+  /**
+   * CONFIG
+   * {Object} data
+   * {String} id
+   * {String} model
+   * {Number} pageSize
+   */
+
   constructor (config) {
     this._config = new Config(config);
-
-    this._data = undefined;
     this._event = new Event();
 
+    this._id = this.getConfig('id') || StoreManager.id();
+    this._isLoaded;
     this._page;
     this._pageSize = this.getConfig('pageSize') || 100;
     this._totalCount;
+
+    this._initData();
+    StoreManager.registerInstance(this);
+  }
+
+  /**
+   * Private.
+   */
+  _initData () {
+    let data = this.getConfig('data');
+
+    if (data) {
+      this.loadData(data);
+    }
   }
 
   /**
@@ -18,11 +41,32 @@ class Store {
     return this._config.get(key);
   }
 
+  getId () {
+    return this._id;
+  }
+
   /**
    * Public.
    */
-  getData () {
-    return this._data;
+  getRecords () {
+    return this._records;
+  }
+
+  /**
+   * Public.
+   * @param {Model} record
+   */
+  indexOf (record) {
+    let i = 0,
+        len = this._records.length;
+
+    for (; i < len; i++) {
+      if (this._records[i] === record) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   /**
@@ -38,7 +82,7 @@ class Store {
     else { begin = (page - 1) * pageSize; }
     end = begin + pageSize;
 
-    return this._data.slice(begin, end);
+    return this._records.slice(begin, end);
   }
 
   /**
@@ -46,7 +90,14 @@ class Store {
    * @param {Number} index
    */
   getAt (index) {
-    return this.getData()[index];
+    return this.getRecords()[index];
+  }
+
+  /**
+   * Public.
+   */
+  isLoaded () {
+    return this._isLoaded;
   }
 
   /**
@@ -100,34 +151,89 @@ class Store {
     this.load(options);
   }
 
-  _onLoadComplete (response) {
-    let data = this._processResponse(response);
-    this._emit('load', this, data);
+  /**
+   * Public.
+   * @param {Object[]} data
+   */
+  loadData (data, options) {
+    this._appendData = undefined;
+
+    if (options && options.appendData) {
+      this._appendData = true;
+    }
+
+    let records = this._processResponse({ Items: data, TotalCount: data.length });
+    this._emit('load', this, records);
   }
 
+  /**
+   * Private.
+   * @param {Object[]} data
+   */
+  _onLoadComplete (response) {
+    let records = this._processResponse(response);
+    this._emit('load', this, records);
+  }
+
+  /**
+   * Private.
+   * @param {Object} response
+   * Example: { Items: [...], TotalCount: 100 }
+   */
   _processResponse (response) {
     let me = this,
         items = response.Items,
-        data = (me._appendData ? me._data : []) || [],
-        responseData = [],
-        itemData;
+        records = (me._appendData ? me._records : []) || [],
+        responseData = [];
 
     items.forEach(function (item) {
-      itemData = me._processResponseItem(item);
-      data.push(itemData);
-      responseData.push(itemData);
+      let record;
+
+      record = new Model({
+        data: me._processResponseItem(item),
+        store: me
+      });
+
+      records.push(record);
+      responseData.push(record);
     });
 
-    me._data = data;
+    me._isLoaded = true;
+    me._records = records;
     me._totalCount = response.TotalCount;
 
     return responseData;
   }
 
+  /**
+   * Private.
+   * @param {Object} data
+   */
+  _processResponseItem (data) {
+    return data;
+  }
+
   _onLoadFailed () {
-    this._data = undefined;
+    this._isLoaded = undefined;
+    this._records = undefined;
     this._page = undefined;
     this._totalCount = 0;
+  }
+
+  /**
+   * Private.
+   * Called by Model.
+   * @param {Model} record
+   * @param {Object} change
+   * Example:
+   * {
+   *   field: key,
+   *   value: value,
+   *   oldValue: oldValue
+   * }
+   */
+  _onModelChange (record, change) {
+    this._emit('datachange', this, record, change);
   }
 
   /**
@@ -155,5 +261,12 @@ class Store {
    */
   _emit (label, ...args) {  
     return this._event.emit(label, ...args);
+  }
+
+  /**
+   * Public.
+   */
+  destroy () {
+    StoreManager.unregisterInstance(this);
   }
 }

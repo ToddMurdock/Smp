@@ -1,8 +1,8 @@
-.smp-textfield .label {
+.smp-field .label {
   font-size: 1em;
   padding: 10px 15px;
 }
 
-.smp-textfield input {
+.smp-field input {
   font-size: 1em;
 }

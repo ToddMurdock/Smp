@@ -9,8 +9,7 @@ class LayoutColumn extends Layout {
    * @param {HTMLElement} layoutEl
    */
   _setLayoutElCls (layoutEl) {
-    layoutEl.addCls('smp-flex');
-    layoutEl.addCls('smp-flex-column');
+    layoutEl.addCls('smp-flex smp-flex-column');
   }
 
   /**

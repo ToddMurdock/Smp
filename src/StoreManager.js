@@ -1,16 +1,16 @@
 /**
  * @usage
-// Registor your component.
-ComponentManager.register(ContactWindow, 'contactwindow');
+// Registor your Store.
+StoreManager.register(ContactsStore, 'ContactsStore');
 
 // Now create an instance.
-let win = ComponentManager.create({
-  type: 'contactwindow'
+let win = StoreManager.create({
+  type: 'ContactsStore'
 });
  */
-class ComponentManager {
+class StoreManager {
   constructor () {
-    this._components = {};
+    this._stores = {};
     this._instances = {};
   }
 
@@ -27,11 +27,11 @@ class ComponentManager {
 
   /**
    * Public.
-   * @param {Component} c
+   * @param {Store} c
    * @param {String} type
    */
   register (c, type) {
-    this._components[type] = c;
+    this._stores[type] = c;
   }
 
   /**
@@ -40,14 +40,14 @@ class ComponentManager {
    */
   create (config) {
     let type = config.type,
-        c = this._components[type];
+        c = this._stores[type];
 
     return new c(config);
   }
 
   /**
    * Public.
-   * @param {Component} c
+   * @param {Store} c
    */
   registerInstance (c) {
     let id = c.getId();
@@ -56,7 +56,7 @@ class ComponentManager {
 
   /**
    * Public.
-   * @param {Component} c
+   * @param {Store} c
    */
   unregisterInstance (c) {
     let id = c.getId();
@@ -67,9 +67,9 @@ class ComponentManager {
    * Public.
    * @param {String} id
    */
-  getComponent (id) {
+  getStore (id) {
     return this._instances[id];
   }
 }
 
-ComponentManager = new ComponentManager();
+StoreManager = new StoreManager();

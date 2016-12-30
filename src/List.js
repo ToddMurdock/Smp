@@ -46,7 +46,14 @@ class List extends Component {
 
   _onRender () {
     super._onRender();
-    this._store.loadPage(1);
+
+    let store = this._store;
+
+    if (store.isLoaded()) {
+      this._renderItems(store.getRecords());
+    } else {
+      store.loadPage(1);
+    }
   }
 
   _initEvents () {
@@ -55,6 +62,7 @@ class List extends Component {
     this._el.on('click', this._onElClick.bind(this));
     this._el.on('scroll', this._onScroll.bind(this));
 
+    this._store.on('datachange', this._onStoreDataChange.bind(this));
     this._store.on('load', this._onStoreLoad.bind(this));
   }
 
@@ -109,35 +117,71 @@ class List extends Component {
 
   /**
    * Private
-   * @param {Store} store
-   * @param {Object[]} data
+   * @param {Number} index
    */
-  _onStoreLoad (store, data) {
-    this._renderItems(data);
+  _getAt (index) {
+    let items = this._el.dom.getElementsByClassName('list-item');
+    return items[index];
   }
 
   /**
    * Private
-   * @param {Object[]} data
+   * @param {Store} store
+   * @param {Model} record
+   * @param {Object} change
    */
-  _renderItems (data) {
-    let el = this._el,
+  _onStoreDataChange (store, record, change) {
+    let index = store.indexOf(record),
+        el = this._getAt(index),
+        itemCls, itemTpl, newEl, template;
+
+    if (el) {
+      template = new Template();
+      itemCls = this.getConfig('itemCls');
+      itemTpl = this.getConfig('itemTpl');
+      newEl = this._renderItem(template, itemCls, itemTpl, record.getData());
+
+      el.parentNode.replaceChild(newEl, el);
+    }
+  }
+
+  /**
+   * Private
+   * @param {Store} store
+   * @param {Model[]} records
+   */
+  _onStoreLoad (store, records) {
+    this._renderItems(records);
+  }
+
+  /**
+   * Private
+   * @param {Model[]} records
+   */
+  _renderItems (records) {
+    let me = this,
+        el = me._el,
         template = new Template(),
         itemCls = this.getConfig('itemCls'),
         itemTpl = this.getConfig('itemTpl');
 
-    data.forEach(function (item) {
-      let itemEl = Dom.create(template.apply(itemTpl, item)),
-          classList = itemEl.classList;
-
-      classList.add('list-item');
-
-      if (itemCls) {
-        classList.add(itemCls);
-      }
-
+    records.forEach(function (record) {
+      let itemEl = me._renderItem(template, itemCls, itemTpl, record.getData());
       el.appendChild(itemEl);
     });
+  }
+
+  _renderItem (template, itemCls, itemTpl, data) {
+    let dom = Dom.create(template.apply(itemTpl, data)),
+        list = dom.classList;
+
+    list.add('list-item');
+
+    if (itemCls) {
+      list.add(itemCls);
+    }
+
+    return dom;
   }
 }
 

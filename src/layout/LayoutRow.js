@@ -9,8 +9,7 @@ class LayoutRow extends Layout {
    * @param {HTMLElement} layoutEl
    */
   _setLayoutElCls (layoutEl) {
-    layoutEl.addCls('smp-flex');
-    layoutEl.addCls('smp-flex-row');
+    layoutEl.addCls('smp-flex smp-flex-row');
   }
 
   /**

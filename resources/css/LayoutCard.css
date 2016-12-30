@@ -7,14 +7,15 @@
 }
 
 .smp-card-item {
-  display: none;
   -moz-box-flex: 1 1;
   flex: 1 1;
 }
 
-.smp-card-active-item {
-  display: flex;
+.smp-card-item:not(.smp-card-active-item) {
+  display: none;
+}
 
+.smp-card-active-item {
   -webkit-animation: fadeInFromNone 0.7s ease-out;
   -moz-animation: fadeInFromNone 0.7s ease-out;
   -o-animation: fadeInFromNone 0.7s ease-out;

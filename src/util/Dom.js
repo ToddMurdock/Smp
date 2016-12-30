@@ -70,6 +70,16 @@ class Dom {
    * @param {String} cls
    */
   static addCls (element, cls) {
+    let split = cls.split(' ');
+
+    if (split.length > 1) {
+      split.forEach(function (item) {
+        Dom.addCls(element, item);
+      });
+
+      return;
+    }
+
     let cs = element.classList;
 
     if (!cs.contains(cls)) {
@@ -83,6 +93,16 @@ class Dom {
    * @param {String} cls
    */
   static removeCls (element, cls) {
+    let split = cls.split(' ');
+
+    if (split.length > 1) {
+      split.forEach(function (item) {
+        Dom.removeCls(element, item);
+      });
+
+      return;
+    }
+
     let cs = element.classList;
 
     if (cs.contains(cls)) {

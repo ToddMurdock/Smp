@@ -26,16 +26,13 @@ class Button extends Component {
       this._config.set('iconCls', value);
 
       if (this._rendered) {
-        let el = Dom.select('.icon', this._el.dom),
-            cs = el.classList;
+        let el = Dom.select('.icon', this._el.dom);
 
         if (oldValue) {
-          cs.remove(oldValue);
+          Dom.removeCls(el, oldValue);
         }
 
-        if (!cs.contains(value)) {
-          cs.add(value);
-        }
+        Dom.addCls(el, value);
       }
 
       this._publish('iconCls', value);

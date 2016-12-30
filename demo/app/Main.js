@@ -15,12 +15,12 @@ class View {
           flex: 1,
           items: [
             {
-              html: 'Card 1',
-              type: 'component'
+              listeners: {
+                select: 'onContactsListSelect'
+              },
+              type: 'contactslist'
             },
             {
-              // bodyStyle: 'padding: 1em',
-              // html: 'Content here...',
               items: [
                 {
                   flex: 1,
@@ -66,19 +66,13 @@ class View {
         {
           handler: 'onCardOneButtonClick',
           iconCls: 'fa fa-id-card-o',
-          text: 'Card 1',
+          text: 'Contacts',
           type: 'button'
         },
         {
           handler: 'onCardTwoButtonClick',
           iconCls: 'fa fa-id-card',
           text: 'Card 2',
-          type: 'button'
-        },
-        {
-          handler: 'onWindowOneButtonClick',
-          iconCls: 'fa fa-window-maximize',
-          text: 'Window 1',
           type: 'button'
         }
       ],

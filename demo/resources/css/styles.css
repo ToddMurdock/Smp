@@ -9,3 +9,13 @@ body {
 .smp-component.smp-card-item {
   padding: 1em;
 }
+
+.contacts-list {
+  overflow: auto;
+}
+
+.contacts-list .list-item {
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  padding: 1em;
+}

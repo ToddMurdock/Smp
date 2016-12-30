@@ -2,8 +2,11 @@ class Panel extends Component {
 
   /**
    * CONFIG
-   * bodyStyle
-   * closable
+   * {String} bodyStyle
+   * {Boolean} closable
+   * {Components[]} items
+   * {Layout/Layout Config} layout
+   * {String} title
    */
 
   /**
@@ -35,8 +38,7 @@ class Panel extends Component {
   _onRender () {
     super._onRender();
 
-    this._el.addCls('smp-flex');
-    this._el.addCls('smp-flex-column');
+    this._el.addCls('smp-flex smp-flex-column');
 
     this._renderHeader();
     this._renderBody();

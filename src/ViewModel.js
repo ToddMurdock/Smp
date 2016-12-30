@@ -69,7 +69,7 @@ class ViewModel {
     let oldValue = this['_' + key];
 
     if (value !== oldValue) {
-      this['_' + key] = value;
+      this._data[key] = value;
       this._publish(key, value, oldValue);
     }
   }
@@ -78,7 +78,7 @@ class ViewModel {
    * Public.
    */
   get (key) {
-    return this['_' + key];
+    return this._data[key];
   }
 
   /**

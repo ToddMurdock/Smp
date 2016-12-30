@@ -92,8 +92,9 @@ class WindowDrag {
     if (!this._ghost) {
       this._ghost = document.createElement('img');
       this._ghost.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-      event.dataTransfer.setDragImage(this._ghost, 0, 0);
     }
+
+    event.dataTransfer.setDragImage(this._ghost, 0, 0);
   }
 
   destroy () {
