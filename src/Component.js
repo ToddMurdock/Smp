@@ -51,6 +51,9 @@ class Component extends Box {
     this.isComponent = true;
   }
 
+  /**
+   * Private.
+   */
   _initBinder () {
     let controller = this.getViewController(),
         model = this.getViewModel();
@@ -80,10 +83,16 @@ class Component extends Box {
     this._publish('data', data);
   }
 
+  /**
+   * Public.
+   */
   getData () {
     return this._config.get('data');
   }
 
+  /**
+   * Private.
+   */
   _onRender () {
     super._onRender();
 
@@ -99,6 +108,9 @@ class Component extends Box {
     }
   }
 
+  /**
+   * Private.
+   */
   _initEvents () {
     super._initEvents();
 
@@ -128,9 +140,14 @@ class Component extends Box {
     return this._binder.getHandler(handler);
   }
 
+  /**
+   * Private.
+   */
   _beforeDestroy () {
     super._beforeDestroy();
-    
+
+    this._binder.destroy();
+
     if (this._owner && this._owner.remove) {
       this._owner.remove(this);
     }

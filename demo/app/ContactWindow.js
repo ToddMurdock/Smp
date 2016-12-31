@@ -80,14 +80,4 @@ class ContactWindow extends Window {
 
     this.contact = config.contact;
   }
-
-  _initEvents () {
-    super._initEvents();
-
-    let vm = this.getViewModel();
-
-    vm.set('contact', this.contact);
-    vm.set('firstName', this.contact.get('FirstName'));
-    vm.set('lastName', this.contact.get('LastName'));
-  }
 }

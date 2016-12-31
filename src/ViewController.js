@@ -1,15 +1,23 @@
 class ViewController {
+
+  /**
+   * @param {Object} config
+   */
   constructor (config) {
     this._config = new Config(config);
   }
 
   /**
-   * TODO
    * Template method.
-   * Called once all bindings are initialized.
+   * Called once the view is rendered and all bindings are initialized.
+   * @param {Component} view
    */
-  // init () {}
+  init (view) {}
 
+  /**
+   * Public.
+   * @param {String} key
+   */
   getConfig (key) {
     return this._config.get(key);
   }
@@ -22,6 +30,9 @@ class ViewController {
     this._config.set('view', view);
   }
 
+  /**
+   * Public.
+   */
   getView () {
     return this._config.get('view');
   }
@@ -34,6 +45,9 @@ class ViewController {
     this._config.set('viewModel', viewModel);
   }
 
+  /**
+   * Public.
+   */
   getViewModel () {
     return this._config.get('viewModel');
   }

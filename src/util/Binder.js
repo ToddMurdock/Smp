@@ -102,13 +102,9 @@ class Binder {
    */
   _initView () {
     let me = this,
-        view = me.getConfig('view'),
-        bind = view.getConfig('bind');
+        view = me.getConfig('view');
 
-    if (bind) {
-      // View has 'bind' config.  Sync the data on 'render'.
-      view.on('render', me._onViewRender.bind(me));
-    }
+    view.on('render', me._onViewRender.bind(me));
 
     view.on('publish', function (view, key, value, oldValue) {
       if (!me._ignoreViewChange) {
@@ -123,18 +119,26 @@ class Binder {
    * @param {Component} view
    */
   _onViewRender (view) {
-    let data, key, value, viewModel;
+    let bind = view.getConfig('bind'),
+        viewController = view.getViewController(),
+        viewModel = this._findViewModel(view),
+        data, key, value;
 
     view.un('render', this._onViewRender);
-    viewModel = this._findViewModel(view);
 
-    if (viewModel) {
+    if (bind && viewModel) {
+      // View has 'bind' config.  Sync the data on 'render'.
       data = viewModel.getData();
 
       for (key in data) {
         value = data[key];
         this._syncViews(key, value);
       }
+    }
+
+    // Call init(), view is rendered and all bindings are initialized.
+    if (viewController) {
+      viewController.init(view);
     }
   }
 
@@ -306,5 +310,12 @@ class Binder {
     }
 
     return items;
+  }
+
+  /**
+   * Public.
+   */
+  destroy () {
+    // TODO: remove listeners
   }
 }
