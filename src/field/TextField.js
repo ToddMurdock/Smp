@@ -9,8 +9,6 @@ class TextField extends Field {
   constructor (config) {
     config.inputType = 'text';
     super(config);
-
-    this.isField = true;
   }
 }
 

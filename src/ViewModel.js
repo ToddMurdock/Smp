@@ -117,4 +117,11 @@ class ViewModel {
   _publish (key, value, oldValue) {
     this._emit('publish', this, key, value, oldValue);
   }
+
+  /**
+   * Public.
+   */
+  destroy () {
+    this._event.destroy();
+  }
 }

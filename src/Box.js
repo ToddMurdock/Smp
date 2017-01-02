@@ -43,6 +43,19 @@ class Box {
    * @param {Object} a
    * @param {Object} b
    */
+  _apply (a, b) {
+    a = a || {};
+
+    for (let key in b) {
+      a[key] = b[key];
+    }
+  }
+
+  /**
+   * Private.
+   * @param {Object} a
+   * @param {Object} b
+   */
   _applyIf (a, b) {
     a = a || {};
 

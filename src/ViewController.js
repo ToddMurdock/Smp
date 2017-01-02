@@ -51,4 +51,10 @@ class ViewController {
   getViewModel () {
     return this._config.get('viewModel');
   }
+
+  /**
+   * Template method.
+   * Public.
+   */
+  destroy () {}
 }

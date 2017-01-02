@@ -101,16 +101,10 @@ class Binder {
    * Private.
    */
   _initView () {
-    let me = this,
-        view = me.getConfig('view');
+    let view = this.getConfig('view');
 
-    view.on('render', me._onViewRender.bind(me));
-
-    view.on('publish', function (view, key, value, oldValue) {
-      if (!me._ignoreViewChange) {
-        me._syncViewModel(view, key, value);
-      }
-    });
+    view.on('render', this._onViewRender.bind(this));
+    view.on('publish', this._onViewPublish.bind(this));
   }
 
   /**
@@ -145,6 +139,19 @@ class Binder {
   /**
    * Private.
    * The view's 'publish' event was fired.
+   * @param {Component} view
+   * @param {String} key
+   * @param {Mixed} value
+   * @param {Mixed} oldValue
+   */
+  _onViewPublish (view, key, value, oldValue) {
+    if (!this._ignoreViewChange) {
+      this._syncViewModel(view, key, value);
+    }
+  }
+
+  /**
+   * Private.
    * @param {Component} view
    * @param {String} viewKey
    * @param {Mixed} value
@@ -200,18 +207,13 @@ class Binder {
   //
 
   _initViewModel () {
-    let me = this,
-        viewModel = me.getConfig('viewModel');
+    let viewModel = this.getConfig('viewModel');
 
     if (!viewModel) {
       return false;
     }
 
-    viewModel.on('publish', function (viewModel, key, value, oldValue) {
-      if (!me._ignoreViewModelChange) {
-        me._syncViews(key, value);
-      }
-    });
+    viewModel.on('publish', this._onViewModelPublish.bind(this));
 
     return true;
   }
@@ -219,6 +221,17 @@ class Binder {
   /**
    * Private.
    * The view model's 'publish' event was fired.
+   * @param {String} viewModelKey
+   * @param {Mixed} value
+   */
+  _onViewModelPublish (viewModel, key, value, oldValue) {
+    if (!this._ignoreViewModelChange) {
+      this._syncViews(key, value);
+    }
+  }
+
+  /**
+   * Private.
    * @param {String} viewModelKey
    * @param {Mixed} value
    */
@@ -316,6 +329,15 @@ class Binder {
    * Public.
    */
   destroy () {
-    // TODO: remove listeners
+    let controller = this.getConfig('viewController'),
+        model = this.getConfig('viewModel');
+
+    if (controller) {
+      controller.destroy();
+    }
+
+    if (model) {
+      model.destroy()
+    }
   }
 }
