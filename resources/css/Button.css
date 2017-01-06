@@ -15,8 +15,6 @@
 .smp-button
 {
 	display: block;
-  font-family: Arial;
-	font-size: 1em;
 	/* text-transform: uppercase; */
   outline: 0;
 	padding: 10px 15px;

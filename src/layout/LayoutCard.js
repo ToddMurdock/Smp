@@ -21,7 +21,7 @@ class LayoutCard extends Layout {
    */
   init (owner) {
     super.init(owner);
-    this._config.set('activeItem', owner.activeItem);
+    this._config.set('activeItem', owner.getConfig('activeItem'));
     this._owner.setActiveItem = this.setActiveItem.bind(this);
   }
 

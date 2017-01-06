@@ -1,5 +1,10 @@
 body {
   font-family: Arial;
+  font-size: 14px
+}
+
+button {
+  font-size: 14px;
 }
 
 .toolbar {

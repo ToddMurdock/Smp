@@ -88,7 +88,7 @@ class Button extends Component {
     let handler = this._getHandler();
 
     if (handler) {
-      handler(this);
+      handler.call(this.getConfig('scope') || this, this);
     }
   }
 
