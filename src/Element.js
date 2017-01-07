@@ -34,6 +34,15 @@ class Element {
 
   /**
    * Public.
+   * @param {HTMLElement/Element} dom
+   */
+  removeChild (dom) {
+    dom = dom instanceof Element ? dom.dom : dom;
+    this.dom.removeChild(dom);
+  }
+
+  /**
+   * Public.
    * @param {HTMLElement} dom
    */
   contains (dom) {

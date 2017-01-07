@@ -45,7 +45,7 @@ class PagingScroller {
   }
  
   loadNextPage () {
-    if (!this._storeFullyLoaded()) {
+    if (!this._loading && !this._storeFullyLoaded()) {
       this._loading = true;
       this._list.getStore().nextPage({ appendData: true });
     }

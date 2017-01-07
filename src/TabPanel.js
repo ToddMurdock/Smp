@@ -2,6 +2,7 @@ class TabPanel extends Component {
 
   /**
    * CONFIG
+   * {Number} activeItem
    * {Component[]} items
    * {String} tabPosition (left, top)
    */
@@ -108,7 +109,7 @@ class TabPanel extends Component {
 
   _renderBody () {
     this._tabBody = new Container({
-      activeItem: 1,
+      activeItem: this.getConfig('activeItem') ||  1,
       items: this.getConfig('items'),
       layout: {
         type: 'card'

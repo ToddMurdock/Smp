@@ -27,11 +27,11 @@ class StoreManager {
 
   /**
    * Public.
-   * @param {Store} c
+   * @param {Store} s
    * @param {String} type
    */
-  register (c, type) {
-    this._stores[type] = c;
+  register (s, type) {
+    this._stores[type] = s;
   }
 
   /**
@@ -40,26 +40,26 @@ class StoreManager {
    */
   create (config) {
     let type = config.type,
-        c = this._stores[type];
+        s = this._stores[type];
 
-    return new c(config);
+    return new s(config);
   }
 
   /**
    * Public.
-   * @param {Store} c
+   * @param {Store} s
    */
-  registerInstance (c) {
-    let id = c.getId();
-    this._instances[id] = c;
+  registerInstance (s) {
+    let id = s.getId();
+    this._instances[id] = s;
   }
 
   /**
    * Public.
-   * @param {Store} c
+   * @param {Store} s
    */
-  unregisterInstance (c) {
-    let id = c.getId();
+  unregisterInstance (s) {
+    let id = s.getId();
     delete this._instances[id];
   }
 

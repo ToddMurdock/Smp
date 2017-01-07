@@ -86,15 +86,25 @@ class List extends Component {
    * @param {Event} event
    */
   _onScroll (e) {
-    let dom = this._el.dom;
+    let dom = this._el.dom,
+        pad = 10;
 
-    if (dom.scrollTop + dom.clientHeight >= dom.scrollHeight) {
+    // scrollTop refers to the top of the scroll position, which will be scrollHeight - offsetHeight
+    if ((dom.scrollTop + pad) >= (dom.scrollHeight - dom.offsetHeight)) {
       this._onScrollEnd(e);
     }
+
+    // if (dom.scrollTop + dom.clientHeight >= dom.scrollHeight) {
+    //   this._onScrollEnd(e);
+    // }
   }
 
   _onScrollEnd (e) {
     this._emit('scrollend', this, e);
+  }
+
+  _getRenderedItems () {
+    return this._el.dom.getElementsByClassName('list-item');
   }
 
   /**
@@ -102,7 +112,7 @@ class List extends Component {
    * @param {HTMLElement} target
    */
   _indexOf (target) {
-    let cn = this._el.dom.getElementsByClassName('list-item'),
+    let cn = this._getRenderedItems(),
         i = 0,
         len = cn.length;
 
@@ -120,7 +130,7 @@ class List extends Component {
    * @param {Number} index
    */
   _getAt (index) {
-    let items = this._el.dom.getElementsByClassName('list-item');
+    let items = this._getRenderedItems();
     return items[index];
   }
 
@@ -149,9 +159,28 @@ class List extends Component {
    * Private
    * @param {Store} store
    * @param {Model[]} records
+   * @param {Object} loadOptions
    */
-  _onStoreLoad (store, records) {
-    this._renderItems(records);
+  _onStoreLoad (store, records, loadOptions) {
+    if (loadOptions && !loadOptions.appendData) {
+      this._removedRenderedItems();
+    }
+
+    if (records.length > 0) {
+      this._renderItems(records);
+    }
+
+    else if (store.getCount() === 0) {
+      this._removedRenderedItems();
+    }
+  }
+
+  _removedRenderedItems () {
+    let dom = this._el.dom;
+
+    while (dom.firstChild) {
+      dom.removeChild(dom.firstChild);
+    }
   }
 
   /**

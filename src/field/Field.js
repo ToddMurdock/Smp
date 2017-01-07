@@ -5,8 +5,9 @@ class Field extends Component {
 
   /**
    * CONFIG
-   * label
-   * value
+   * {String} inputType (mobileinputtypes.com) How input types modify a phones virtual keyboard.
+   * {String} label
+   * {Mixed} value
    */
 
   /**
@@ -46,13 +47,20 @@ class Field extends Component {
   }
 
   /**
+   * Public.
+   */
+  getValue () {
+    return this._inputEl.dom.value;
+  }
+
+  /**
    * @param {Object} config
    */
   constructor (config) {
-    config.baseCls = 'smp-textfield';
+    config.baseCls = 'smp-field';
     config.renderTpl = '<div id="<%=id%>" class="smp-field smp-flex smp-flex-row <%=cls%>" style="{style}">' +
         '<span class="label"><%=label%></span>' +
-        '<input class="field smp-flex-column-item" type="{inputType}" name="firstname">' +
+        '<input class="field smp-flex-column-item" type="{inputType}">' +
       '</div>';
   
     super(config);
@@ -102,3 +110,5 @@ class Field extends Component {
     this._inputEl.destroy();
   }
 }
+
+ComponentManager.register(Field, 'field');

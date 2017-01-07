@@ -14,6 +14,7 @@ class Store {
 
     this._id = this.getConfig('id') || StoreManager.id();
     this._isLoaded;
+    this._isLoading;
     this._page;
     this._pageSize = this.getConfig('pageSize') || 100;
     this._totalCount;
@@ -43,6 +44,10 @@ class Store {
 
   getId () {
     return this._id;
+  }
+
+  getCount () {
+    return this._records.length;
   }
 
   /**
@@ -103,6 +108,13 @@ class Store {
   /**
    * Public.
    */
+  isLoading () {
+    return this._isLoading;
+  }
+
+  /**
+   * Public.
+   */
   getPage () {
     return this._page;
   }
@@ -123,14 +135,7 @@ class Store {
 
   /**
    * Public.
-   */
-  load (options) {
-    // TODO
-    // ajax call
-  }
-
-  /**
-   * Public.
+   * @param {Object} [options]
    */
   nextPage (options) {
     this._appendData = undefined;
@@ -145,10 +150,48 @@ class Store {
   /**
    * Public.
    * @param {Number} page
+   * @param {Object} [options]
    */
   loadPage (page, options) {
+    let size = this.getPageSize();
+
     this._page = page;
+
+    options = this._apply(options, {
+      limit: size,
+      page: page,
+      start: (page - 1) * size
+    });
+
     this.load(options);
+  }
+
+  /**
+   * Public.
+   * @param {Object} [options]
+   */
+  load (options) {
+    // TODO
+    // ajax call
+    this._isLoading = true;
+    this._currentLoadOptions = options;
+  }
+
+  /**
+   * Public.
+   * @param {String} text
+   */
+  filter (text) {
+    // TODO
+    // ajax call
+  }
+
+  /**
+   * Public.
+   */
+  clearFilter () {
+    // TODO
+    // ajax call
   }
 
   /**
@@ -172,7 +215,8 @@ class Store {
    */
   _onLoadComplete (response) {
     let records = this._processResponse(response);
-    this._emit('load', this, records);
+    this._isLoading = undefined;
+    this._emit('load', this, records, this._currentLoadOptions);
   }
 
   /**
@@ -214,6 +258,7 @@ class Store {
   }
 
   _onLoadFailed () {
+    this._isLoading = undefined;
     this._isLoaded = undefined;
     this._records = undefined;
     this._page = undefined;
@@ -261,6 +306,21 @@ class Store {
    */
   _emit (label, ...args) {  
     return this._event.emit(label, ...args);
+  }
+
+  /**
+   * Private.
+   * @param {Object} a
+   * @param {Object} b
+   */
+  _apply (a, b) {
+    a = a || {};
+
+    for (let key in b) {
+      a[key] = b[key];
+    }
+
+    return a;
   }
 
   /**
