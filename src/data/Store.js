@@ -5,7 +5,6 @@ class Store {
    * {Object} data
    * {String} id
    * {String} model
-   * {Number} pageSize
    */
 
   constructor (config) {
@@ -15,9 +14,6 @@ class Store {
     this._id = this.getConfig('id') || StoreManager.id();
     this._isLoaded;
     this._isLoading;
-    this._page;
-    this._pageSize = this.getConfig('pageSize') || 100;
-    this._totalCount;
 
     this._initData();
     StoreManager.registerInstance(this);
@@ -76,22 +72,6 @@ class Store {
 
   /**
    * Public.
-   * Returns the data for the current page.
-   */
-  getPageData () {
-    let page = this.getPage(),
-        pageSize = this.getPageSize(),
-        begin, end;
-
-    if (page === 1) { begin = 0; }
-    else { begin = (page - 1) * pageSize; }
-    end = begin + pageSize;
-
-    return this._records.slice(begin, end);
-  }
-
-  /**
-   * Public.
    * @param {Number} index
    */
   getAt (index) {
@@ -114,56 +94,22 @@ class Store {
 
   /**
    * Public.
+   * @param {String} text
    */
-  getPage () {
-    return this._page;
-  }
-
-  /**
-   * Public.
-   */
-  getPageSize () {
-    return this._pageSize;
-  }
-
-  /**
-   * Public.
-   */
-  getTotalCount () {
-    return this._totalCount;
-  }
-
-  /**
-   * Public.
-   * @param {Object} [options]
-   */
-  nextPage (options) {
-    this._appendData = undefined;
-
-    if (options && options.appendData) {
-      this._appendData = true;
-    }
-
-    this.loadPage(this.getPage() + 1, options);
-  }
-
-  /**
-   * Public.
-   * @param {Number} page
-   * @param {Object} [options]
-   */
-  loadPage (page, options) {
-    let size = this.getPageSize();
-
-    this._page = page;
-
-    options = this._apply(options, {
-      limit: size,
-      page: page,
-      start: (page - 1) * size
+  filter (text) {
+    this.load({
+      appendData: false,
+      filter: text
     });
+  }
 
-    this.load(options);
+  /**
+   * Public.
+   */
+  clearFilter () {
+    this.load({
+      appendData: false
+    });
   }
 
   /**
@@ -171,40 +117,25 @@ class Store {
    * @param {Object} [options]
    */
   load (options) {
-    // TODO
-    // ajax call
+    options = options || {}
+
+    if (options.filter) {
+      // TODO: ajax call
+    } else {
+      // TODO: ajax cll
+    }
+
     this._isLoading = true;
     this._currentLoadOptions = options;
   }
 
   /**
    * Public.
-   * @param {String} text
-   */
-  filter (text) {
-    // TODO
-    // ajax call
-  }
-
-  /**
-   * Public.
-   */
-  clearFilter () {
-    // TODO
-    // ajax call
-  }
-
-  /**
-   * Public.
    * @param {Object[]} data
+   * @param {Object} [options]
    */
   loadData (data, options) {
-    this._appendData = undefined;
-
-    if (options && options.appendData) {
-      this._appendData = true;
-    }
-
+    this._currentLoadOptions = options || {};
     let records = this._processResponse({ Items: data, TotalCount: data.length });
     this._emit('load', this, records);
   }
@@ -222,12 +153,13 @@ class Store {
   /**
    * Private.
    * @param {Object} response
-   * Example: { Items: [...], TotalCount: 100 }
+   * Example: { Items: [...] }
    */
   _processResponse (response) {
     let me = this,
+        loadOptions = this._currentLoadOptions,
         items = response.Items,
-        records = (me._appendData ? me._records : []) || [],
+        records = (loadOptions.appendData ? me._records : []) || [],
         responseData = [];
 
     items.forEach(function (item) {
@@ -244,7 +176,6 @@ class Store {
 
     me._isLoaded = true;
     me._records = records;
-    me._totalCount = response.TotalCount;
 
     return responseData;
   }
@@ -261,8 +192,6 @@ class Store {
     this._isLoading = undefined;
     this._isLoaded = undefined;
     this._records = undefined;
-    this._page = undefined;
-    this._totalCount = 0;
   }
 
   /**
