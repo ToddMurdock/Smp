@@ -120,10 +120,16 @@ class Store {
     options = options || {}
 
     if (options.filter) {
-      // TODO: ajax call
-    } else {
-      // TODO: ajax cll
+      // Apply filter
     }
+
+    // Impliment ajax call
+
+    // On load success
+    // this._onLoadComplete(response);
+
+    // On load fail
+    // this._onLoadFailed();
 
     this._isLoading = true;
     this._currentLoadOptions = options;

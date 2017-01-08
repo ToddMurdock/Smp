@@ -54,15 +54,18 @@ class TabPanel extends Component {
    */
   _renderTabBar () {
     let me = this,
+        activeItem = (this.getConfig('activeItem') ||  1) - 1,
         tabPosition = this.getConfig('tabPosition'),
         items = me.getConfig('items'),
         buttons = [];
 
-    items.forEach(function (comp) {
+    items.forEach(function (comp, index) {
       let btnCfg = {
         handler: me._onTabClick,
+        pressed: activeItem === index,
         scope: me,
         text: comp.title,
+        toggleGroup: me.getId() + '-tabs',
         type: 'button'
       };
 
@@ -86,10 +89,12 @@ class TabPanel extends Component {
   }
 
   _onTabClick (btn) {
-    let index = this._indexOfTab(btn);
+    if (btn.pressed === true) {
+      let index = this._indexOfTab(btn);
 
-    if (!isNaN(index)) {
-      this._tabBody.setActiveItem(index + 1);
+      if (!isNaN(index)) {
+        this._tabBody.setActiveItem(index + 1);
+      }
     }
   }
 

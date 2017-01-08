@@ -9,7 +9,6 @@ class PagingStore extends Store {
     super(config);
 
     this._page;
-    this._pageSize = this.getConfig('pageSize') || 100;
     this._totalCount;
   }
 
@@ -40,7 +39,7 @@ class PagingStore extends Store {
    * Public.
    */
   getPageSize () {
-    return this._pageSize;
+    return this.getConfig('pageSize') || 100;
   }
 
   /**
@@ -109,6 +108,9 @@ class PagingStore extends Store {
     return super._processResponse(response);
   }
 
+  /**
+   * Private.
+   */
   _onLoadFailed () {
     super._onLoadFailed();
 
