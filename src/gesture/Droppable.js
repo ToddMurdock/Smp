@@ -10,7 +10,7 @@ new Droppable({
   },
   onDrop: function (e) {
     e.preventDefault();
-    let data = e.dataTransfer.getData('...');
+    var data = e.dataTransfer.getData('...');
   }
 });
  */
@@ -24,7 +24,7 @@ class Droppable {
    */
 
   constructor (config) {
-    let el = config.el;
+    var el = config.el;
 
     this.onDragOver = config.onDragOver;
     this.onDrop = config.onDrop;

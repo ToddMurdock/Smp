@@ -16,74 +16,11 @@ class Box {
     return this._config.get(key);
   }
 
+  /**
+   * Public.
+   */
   getInitialConfig () {
     return this._config.getInitialConfig();
-  }
-
-  /**
-   * Private.
-   * @param {Object} config
-   */
-  constructor (config) {
-    this._applyIf(config, {
-      baseCls: 'smp-box',
-      renderTpl: '<div id="{id}" class="{cls}" style="{style}"></div>'
-    });
-
-    this._config = new Config(config);
-    this._event = new Event();
-    this._id = ComponentManager.id();
-
-    this.isBox = true;
-    ComponentManager.registerInstance(this);
-  }
-
-  /**
-   * Private.
-   * @param {Object} a
-   * @param {Object} b
-   */
-  _apply (a, b) {
-    a = a || {};
-
-    for (let key in b) {
-      a[key] = b[key];
-    }
-  }
-
-  /**
-   * Private.
-   * @param {Object} a
-   * @param {Object} b
-   */
-  _applyIf (a, b) {
-    a = a || {};
-
-    for (let key in b) {
-      if (!a[key]) {
-        a[key] = b[key];
-      }
-    }
-  }
-
-  /**
-   * Private.
-   */
-  _getRenderData () {
-    let cls = this.getConfig('baseCls'),
-        configCls = this.getConfig('cls'),
-        configStyle = this.getConfig('style'),
-        fullscreen = this.getConfig('fullscreen'),
-        style = configStyle || '';
-
-    cls += configCls ? ' ' + configCls : '';
-    cls += fullscreen ? ' smp-fullscreen' : '';
-
-    return {
-      cls: cls,
-      id: this.getId(),
-      style: style
-    };
   }
 
   /**
@@ -97,7 +34,7 @@ class Box {
    * Public.
    */
   getId () {
-    return this.getConfig('baseCls') + '-' + this._id;
+    return this._getBaseCls() + '-' + this._id;
   }
 
   /**
@@ -137,6 +74,47 @@ class Box {
 
   /**
    * Private.
+   * @param {Object} config
+   */
+  constructor (config) {
+    this._config = new Config(config);
+    this._event = new Event();
+    this._id = ComponentManager.id();
+
+    this.isBox = true;
+    ComponentManager.registerInstance(this);
+  }
+
+  _getBaseCls () {
+    return 'smp-box';
+  }
+
+  _getRenderTpl () {
+    return '<div id="{id}" class="{cls}" style="{style}"></div>';
+  }
+
+  /**
+   * Private.
+   */
+  _getRenderData () {
+    var cls = this._getBaseCls(),
+        configCls = this.getConfig('cls'),
+        configStyle = this.getConfig('style'),
+        fullscreen = this.getConfig('fullscreen'),
+        style = configStyle || '';
+
+    cls += configCls ? ' ' + configCls : '';
+    cls += fullscreen ? ' smp-fullscreen' : '';
+
+    return {
+      cls: cls,
+      id: this.getId(),
+      style: style
+    };
+  }
+
+  /**
+   * Private.
    */
   _onResize () {
     this._emit('resize', this, this.getBox());
@@ -156,13 +134,13 @@ class Box {
    * @param {String} [position] 'before' or 'after'
    */
   render (container, position) {
-    let template = new Template(),
+    var template = new Template(),
         data = this._getRenderData(),
-        renderTpl = this.getConfig('renderTpl'),
-        html = template.apply(renderTpl, data),
+        renderTo = container || this.getConfig('renderTo'),
+        html = template.apply(this._getRenderTpl(), data),
         el = new Element(html);
 
-    Dom.insert(container || this.getConfig('renderTo'), el.dom, position);
+    Dom.insert(renderTo, el.dom, position);
 
     this._el = el;
     this._rendered = true;
@@ -175,7 +153,7 @@ class Box {
    * Private.
    */
   _onRender () {
-    let height = this.getConfig('height'),
+    var height = this.getConfig('height'),
         width = this.getConfig('width');
 
     this.setSize(width, height);
@@ -185,23 +163,20 @@ class Box {
    * Private.
    */
   _initEvents () {
-    this._boundOnWindowResize = this._onWindowResize.bind(this);
-    Dom.on(window, 'resize', this._boundOnWindowResize);
+    var fullscreen = this.getConfig('fullscreen');
+
+    if (fullscreen) {
+      this._boundOnWindowResize = this._onWindowResize.bind(this);
+      Dom.on(window, 'resize', this._boundOnWindowResize);
+    }
   }
 
   /**
    * Private.
    */
   _onWindowResize () {
-    let fullscreen = this.getConfig('fullscreen'),
-        docEl;
-
-    if (fullscreen) {
-      docEl = document.documentElement;
-      this.setSize(docEl.clientWidth, docEl.clientHeight);
-    } else {
-      this._onResize();
-    }
+    var el = document.documentElement;
+    this.setSize(el.clientWidth, el.clientHeight);
   }
 
   /**
@@ -233,9 +208,40 @@ class Box {
 
   /**
    * Private.
+   * @param {Object} a
+   * @param {Object} b
+   */
+  _apply (a, b) {
+    a = a || {};
+
+    for (var key in b) {
+      a[key] = b[key];
+    }
+  }
+
+  /**
+   * Private.
+   * @param {Object} a
+   * @param {Object} b
+   */
+  _applyIf (a, b) {
+    a = a || {};
+
+    for (var key in b) {
+      if (!a[key]) {
+        a[key] = b[key];
+      }
+    }
+  }
+
+  /**
+   * Private.
    */
   _beforeDestroy () {
-    Dom.un(window, 'resize', this._boundOnWindowResize);
+    if (this._boundOnWindowResize) {
+      Dom.un(window, 'resize', this._boundOnWindowResize);
+    }
+
     this._event.destroy();
   }
 

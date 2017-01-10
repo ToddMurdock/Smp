@@ -13,15 +13,19 @@ class Panel extends Component {
    * Private.
    */
   constructor (config) {
-    config.baseCls = config.baseCls || 'smp-panel';
     config.bodyHtml = config.html;
     config.data = undefined;
     config.html = undefined;
     config.tpl = undefined;
+
     super(config);
 
     this._initLayout();
     this.isPanel = true;
+  }
+
+  _getBaseCls () {
+    return 'smp-panel';
   }
 
   /**
@@ -38,8 +42,6 @@ class Panel extends Component {
   _onRender () {
     super._onRender();
 
-    this._el.addCls('smp-flex smp-flex-column');
-
     this._renderHeader();
     this._renderBody();
 
@@ -52,7 +54,7 @@ class Panel extends Component {
    * Private.
    */
   _renderHeader () {
-    let closable = this.getConfig('closable'),
+    var closable = this.getConfig('closable'),
         header = new Header({
           closable: closable,
           renderTo: this._el,
@@ -84,10 +86,10 @@ class Panel extends Component {
    * Private.
    */
   _renderBody () {
-    let template = new Template(),
+    var template = new Template(),
         bodyStyle = this.getConfig('bodyStyle'),
         data = { style: bodyStyle },
-        tpl = '<div class="smp-body smp-flex-column-item" style="{style}"></div>',
+        tpl = '<div class="smp-body" style="{style}"></div>',
         html = template.apply(tpl, data),
         bodyEl = new Element(html);
 
@@ -103,7 +105,7 @@ class Panel extends Component {
    * Private.
    */
   _renderHtml () {
-    let html = this.getConfig('bodyHtml');
+    var html = this.getConfig('bodyHtml');
 
     if (html) {
       this._bodyEl.update(html);
@@ -154,6 +156,9 @@ class Panel extends Component {
    * Private.
    */
   _doLayout () {
+    this._el.addCls('smp-flex smp-flex-column');
+    this._bodyEl.addCls('smp-flex-column-item');
+
     if (this._items) {
       this._layout.doLayout();
     }

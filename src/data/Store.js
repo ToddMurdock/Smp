@@ -23,7 +23,7 @@ class Store {
    * Private.
    */
   _initData () {
-    let data = this.getConfig('data');
+    var data = this.getConfig('data');
 
     if (data) {
       this.loadData(data);
@@ -58,7 +58,7 @@ class Store {
    * @param {Model} record
    */
   indexOf (record) {
-    let i = 0,
+    var i = 0,
         len = this._records.length;
 
     for (; i < len; i++) {
@@ -142,7 +142,7 @@ class Store {
    */
   loadData (data, options) {
     this._currentLoadOptions = options || {};
-    let records = this._processResponse({ Items: data, TotalCount: data.length });
+    var records = this._processResponse({ Items: data, TotalCount: data.length });
     this._emit('load', this, records);
   }
 
@@ -151,7 +151,7 @@ class Store {
    * @param {Object[]} data
    */
   _onLoadComplete (response) {
-    let records = this._processResponse(response);
+    var records = this._processResponse(response);
     this._isLoading = undefined;
     this._emit('load', this, records, this._currentLoadOptions);
   }
@@ -162,14 +162,14 @@ class Store {
    * Example: { Items: [...] }
    */
   _processResponse (response) {
-    let me = this,
+    var me = this,
         loadOptions = this._currentLoadOptions,
         items = response.Items,
         records = (loadOptions.appendData ? me._records : []) || [],
         responseData = [];
 
     items.forEach(function (item) {
-      let record;
+      var record;
 
       record = new Model({
         data: me._processResponseItem(item),
@@ -251,7 +251,7 @@ class Store {
   _apply (a, b) {
     a = a || {};
 
-    for (let key in b) {
+    for (var key in b) {
       a[key] = b[key];
     }
 

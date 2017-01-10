@@ -22,7 +22,7 @@ class Event {
    * @param {Function} callback
    */
   un (label, callback) {  
-    let listeners = this._listeners.get(label),
+    var listeners = this._listeners.get(label),
         index;
 
     if (listeners && listeners.length) {
@@ -46,7 +46,7 @@ class Event {
    * @param {spread/rest} args
    */
   emit (label, ...args) {  
-    let listeners = this._listeners.get(label);
+    var listeners = this._listeners.get(label);
 
     if (listeners && listeners.length) {
       listeners.forEach((listener) => {
@@ -60,7 +60,7 @@ class Event {
   }
 
   destroy () {
-    let me = this;
+    var me = this;
 
     me._listeners.forEach(function (callbackItems, label) {
       callbackItems.forEach(function (callback) {

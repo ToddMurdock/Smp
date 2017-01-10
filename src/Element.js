@@ -107,7 +107,7 @@ class Element {
    * @param {Function} callback
    */
   un (label, callback) {
-    let listeners = this._listeners.get(label),
+    var listeners = this._listeners.get(label),
         found, index;
 
     if (listeners && listeners.length) {
@@ -132,7 +132,7 @@ class Element {
   }
 
   clearListeners () {
-    let me = this;
+    var me = this;
 
     me._listeners.forEach(function (callbackItems, label) {
       callbackItems.forEach(function (callback) {
@@ -144,7 +144,7 @@ class Element {
   }
 
   destroy () {
-    let me = this,
+    var me = this,
         dom = me.dom;
 
     me.clearListeners();

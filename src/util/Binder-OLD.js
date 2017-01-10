@@ -20,7 +20,7 @@ class BinderNew {
   }
 
   _init () {
-    let controller = this.getConfig('viewController'),
+    var controller = this.getConfig('viewController'),
         model = this.getConfig('viewModel'),
         view = this.getConfig('view');
 
@@ -58,7 +58,7 @@ class BinderNew {
    * @param {Component} comp
    */
   _findViewHandler (handler, comp) {
-    let controller,
+    var controller,
         owner;
 
     if (comp[handler]) {
@@ -81,7 +81,7 @@ class BinderNew {
   }
 
   initViewBindings () {
-    let view = this.getConfig('view'),
+    var view = this.getConfig('view'),
         bind = view.getConfig('bind'),
         viewModel;
 
@@ -99,7 +99,7 @@ class BinderNew {
    * @param {String} viewModelKey
    */
   _syncWithViewModel (view, viewModel) {
-    let data = viewModel.getData(),
+    var data = viewModel.getData(),
         key, setter, value;
 
     for (key in data) {
@@ -114,7 +114,7 @@ class BinderNew {
    * @param {String} viewModelKey
    */
   _getViewSetter (view, viewModelKey) {
-    let bindKey = this._getViewBindKey(view, viewModelKey);
+    var bindKey = this._getViewBindKey(view, viewModelKey);
 
     if (bindKey) {
       return 'set' + bindKey.charAt(0).toUpperCase() + bindKey.slice(1);
@@ -130,10 +130,10 @@ class BinderNew {
    * },
    */
   _getViewBindKey (view, viewModelKey) {
-    let bind = view.getConfig('bind'),
+    var bind = view.getConfig('bind'),
         value;
 
-    for (let key in bind) {
+    for (var key in bind) {
       value = bind[key];
 
       if (value === viewModelKey) {
@@ -150,7 +150,7 @@ class BinderNew {
    * @param {Mixed} value
    */
   publishToViewViewModel (key, value) {
-    let view = this.getConfig('view'),
+    var view = this.getConfig('view'),
         viewModel = this.getConfig('viewModel');
 
     if (!viewModel) {
@@ -166,7 +166,7 @@ class BinderNew {
    * @param {Component} comp
    */
   _findViewModel (comp) {
-    let viewModel = comp.getViewModel();
+    var viewModel = comp.getViewModel();
 
     if (viewModel) {
       return viewModel;

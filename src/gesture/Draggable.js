@@ -22,7 +22,7 @@ class Draggable {
    */
 
   constructor (config) {
-    let el = config.el;
+    var el = config.el;
 
     this.onDragStart = config.onDragStart;
     this.onDrag = config.onDrag;

@@ -4,7 +4,7 @@
 StoreManager.register(ContactsStore, 'ContactsStore');
 
 // Now create an instance.
-let win = StoreManager.create({
+var win = StoreManager.create({
   type: 'ContactsStore'
 });
  */
@@ -39,7 +39,7 @@ class StoreManager {
    * @param {Object} config
    */
   create (config) {
-    let type = config.type,
+    var type = config.type,
         s = this._stores[type];
 
     return new s(config);
@@ -50,7 +50,7 @@ class StoreManager {
    * @param {Store} s
    */
   registerInstance (s) {
-    let id = s.getId();
+    var id = s.getId();
     this._instances[id] = s;
   }
 
@@ -59,7 +59,7 @@ class StoreManager {
    * @param {Store} s
    */
   unregisterInstance (s) {
-    let id = s.getId();
+    var id = s.getId();
     delete this._instances[id];
   }
 

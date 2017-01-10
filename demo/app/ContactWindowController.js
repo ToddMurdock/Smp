@@ -4,7 +4,7 @@ class ContactWindowController extends ViewController {
    * @param {ContactWindow} view
    */
   init (view) {
-    let vm = this.getViewModel(),
+    var vm = this.getViewModel(),
         contact = view.contact;
 
     vm.set('contact', contact);
@@ -29,7 +29,7 @@ class ContactWindowController extends ViewController {
   }
 
   onOkClick () {
-    let view = this.getView(),
+    var view = this.getView(),
         vm = this.getViewModel(),
         contact = vm.get('contact');
 

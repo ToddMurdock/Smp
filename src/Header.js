@@ -44,7 +44,7 @@ class Header {
    * Private.
    */
   render () {
-    let template = new Template(),
+    var template = new Template(),
         closable = this.getConfig('closable'),
         renderTo = this.getConfig('renderTo'),
         data = { title: this.getConfig('title') },
@@ -77,7 +77,7 @@ class Header {
    * Private.
    */
   _initEvents () {
-    let closeEl = this._closeEl;
+    var closeEl = this._closeEl;
 
     if (closeEl) {
       closeEl.on('click', this._onCloseClick.bind(this));
@@ -122,7 +122,6 @@ class Header {
    * Private.
    */
   _beforeDestroy () {
-    Dom.un(window, 'resize', this._boundOnWindowResize);
     this._event.destroy();
   }
 

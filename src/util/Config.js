@@ -6,7 +6,7 @@ class Config {
     if (config) {
       this._initialConfig = config;
 
-      for (let key in config) {
+      for (var key in config) {
         this['_' + key] = config[key];
       }
     }

@@ -1,42 +1,27 @@
 class Button extends Component {
 
   /**
+   * {Boolean} allowDepress
    * {Function} handler
    * {String} iconCls
+   * {Boolean} pressed
    * {Object} scope
    * {String} text
    * {String} toggleGroup
    */
-
-  constructor (config) {
-    config.baseCls = 'smp-button';
-    config.renderTpl = '<button type="button" id="{id}" class="{cls}" style="{style}"><span class="icon {iconCls}"></span> <span class="text">{text}</span></button>';
-
-    super(config);
-    this.isButton = true;
-
-    if (typeof config.toggleGroup === 'string' && config.toggleGroup !== '') {
-      this.enableToggle = true;
-    }
-
-    this.allowDepress;
-    this.pressed = config.pressed || undefined;
-    this.pressedCls = 'smp-button-pressed';
-    this.toggleDisabled;
-  }
 
   /**
    * Public.
    * @param {String} value
    */
   setIconCls (value) {
-    let oldValue = this._config.get('iconCls');
+    var oldValue = this._config.get('iconCls');
 
     if (value !== oldValue) {
       this._config.set('iconCls', value);
 
       if (this._rendered) {
-        let el = Dom.select('.icon', this._el.dom);
+        var el = Dom.select('.icon', this._el.dom);
 
         if (oldValue) {
           Dom.removeCls(el, oldValue);
@@ -54,13 +39,13 @@ class Button extends Component {
    * @param {String} value
    */
   setText (value) {
-    let oldValue = this._config.get('text');
+    var oldValue = this._config.get('text');
 
     this._config.set('text', value);
 
     if (value !== oldValue) {
       if (this._rendered) {
-        let el = Dom.select('.text', this._el.dom);
+        var el = Dom.select('.text', this._el.dom);
         el.innerHTML = value;
       }
 
@@ -69,11 +54,62 @@ class Button extends Component {
   }
 
   /**
+   * Public
+   * If a state it passed, it becomes the pressed state otherwise the current state is toggled.
+   * @param {Boolean} [state] Force a particular state
+   * @param {Boolean} [suppressEvent=false] True to stop events being fired when calling this method.
+   * @return {Ext.button.Button} this
+   */
+  toggle (state, suppressEvent) {
+    state = state === undefined ? !this.pressed : !!state;
+
+    if (state !== this.pressed) {
+      if (this._rendered) {
+        this[state ? 'addCls' : 'removeCls'](this.pressedCls);
+      }
+
+      this.pressed = state;
+
+      if (!suppressEvent) {
+        this._emit('toggle', this, state);
+        this._fireHandler();
+      }
+    }
+
+    return this;
+  }
+
+  /**
+   * Private.
+   * @param {Object} [config]
+   */
+  constructor (config) {
+    super(config);
+    this.isButton = true;
+
+    if (typeof config.toggleGroup === 'string' && config.toggleGroup !== '') {
+      this.enableToggle = true;
+    }
+
+    this.pressed = config.pressed || undefined;
+    this.pressedCls = 'smp-button-pressed';
+    this.toggleDisabled;
+  }
+
+  _getBaseCls () {
+    return 'smp-button';
+  }
+
+  _getRenderTpl () {
+    return '<button type="button" id="{id}" class="{cls}" style="{style}"><span class="icon {iconCls}"></span> <span class="text">{text}</span></button>';
+  }
+
+  /**
    * Override.
    * Private.
    */
   _getRenderData () {
-    let data = super._getRenderData(),
+    var data = super._getRenderData(),
         configCls = this.getConfig('cls'),
         iconCls = this.getConfig('iconCls') || '';
 
@@ -120,48 +156,21 @@ class Button extends Component {
   }
 
   _doToggle () {
+    var allowDepress = this.getConfig('allowDepress');
+
     // Do nothing if button is disabled
     if (this.toggleDisabled) { return; }
 
-    if (this.enableToggle && (this.allowDepress !== false || !this.pressed)) {
+    if (this.enableToggle && (allowDepress !== false || !this.pressed)) {
       this.toggle();
     }
-  }
-
-  /**
-  * If a state it passed, it becomes the pressed state otherwise the current state is toggled.
-  * @param {Boolean} [state] Force a particular state
-  * @param {Boolean} [suppressEvent=false] True to stop events being fired when calling this method.
-  * @return {Ext.button.Button} this
-  */
-  toggle (state, suppressEvent) {
-    state = state === undefined ? !this.pressed : !!state;
-
-    if (state !== this.pressed) {
-      if (this._rendered) {
-        this[state ? 'addCls' : 'removeCls'](this.pressedCls);
-      }
-
-      this.pressed = state;
-
-      if (!suppressEvent) {
-        this._emit('toggle', this, state);
-
-        // if (this.toggleHandler) {
-        //   this.toggleHandler.call(this.getConfig('scope') || this, this, state);
-        // }
-        this._fireHandler();
-      }
-    }
-
-    return this;
   }
 
   /**
    * Private.
    */
   _fireHandler () {
-    let handler = this._getHandler();
+    var handler = this._getHandler();
 
     if (handler) {
       handler.call(this.getConfig('scope') || this, this);
@@ -172,7 +181,7 @@ class Button extends Component {
    * Private.
    */
   _getHandler () {
-    let handler = this.getConfig('handler');
+    var handler = this.getConfig('handler');
     return this._binder.getHandler(handler);
   }
 

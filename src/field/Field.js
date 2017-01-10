@@ -15,7 +15,7 @@ class Field extends Component {
    * @param {String} value
    */
   setLabel (value) {
-    let oldValue = this._config.get('label');
+    var oldValue = this._config.get('label');
 
     this._config.set('label', value);
 
@@ -33,7 +33,7 @@ class Field extends Component {
    * @param {String} value
    */
   setValue (value) {
-    let oldValue = this._config.get('value');
+    var oldValue = this._config.get('value');
 
     this._config.set('value', value);
 
@@ -57,22 +57,26 @@ class Field extends Component {
    * @param {Object} config
    */
   constructor (config) {
-    config.baseCls = 'smp-field';
-    config.renderTpl = '<div id="<%=id%>" class="smp-field smp-flex smp-flex-row <%=cls%>" style="{style}">' +
-        '<span class="label"><%=label%></span>' +
+    super(config);
+    this.isField = true;
+  }
+
+  _getBaseCls () {
+    return 'smp-field';
+  }
+
+  _getRenderTpl () {
+    return '<div id="{id}" class="smp-field smp-flex smp-flex-row {cls}" style="{style}">' +
+        '<span class="label">{label}</span>' +
         '<input class="field smp-flex-column-item" type="{inputType}">' +
       '</div>';
-  
-    super(config);
-
-    this.isField = true;
   }
 
   /**
    * Private.
    */
   _getRenderData () {
-    let data = super._getRenderData();
+    var data = super._getRenderData();
 
     data.inputType = this.getConfig('inputType'),
     data.label = this.getConfig('label');
@@ -82,7 +86,7 @@ class Field extends Component {
   _onRender () {
     super._onRender();
 
-    let labelDom = Dom.select('.label', this._el.dom),
+    var labelDom = Dom.select('.label', this._el.dom),
         inputDom = Dom.select('.field', this._el.dom);
 
     this._labelEl = new Element(labelDom);
@@ -101,7 +105,7 @@ class Field extends Component {
    * Private.
    */
   _onChange (event) {
-    let value = event.target.value;
+    var value = event.target.value;
     this._emit('change', this, value, event);
   }
 

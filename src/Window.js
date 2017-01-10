@@ -11,13 +11,16 @@ class Window extends Panel {
    * Private.
    */
   constructor (config) {
-    config.baseCls = 'smp-window';
     config.closable = true;
     config.draggable = true;
     config.renderTo = document.body;
     super(config);
 
     this.isWindow = true;
+  }
+
+  _getBaseCls () {
+    return 'smp-window';
   }
 
   /**
@@ -33,7 +36,7 @@ class Window extends Panel {
    * Private.
    */
   _renderModal () {
-    let el = new Element('<div class="smp-modal"></div>');
+    var el = new Element('<div class="smp-modal"></div>');
 
     el.appendChild(this._el);
     document.body.appendChild(el.dom);
@@ -47,7 +50,7 @@ class Window extends Panel {
   _doLayout () {
     super._doLayout();
 
-    let box = this.getBox();
+    var box = this.getBox();
 
     this._el.setStyle('left', 'calc(50% - ' + (box.width / 2) + 'px)');
     this._el.setStyle('top', 'calc(50% - ' + (box.height / 2) + 'px)');

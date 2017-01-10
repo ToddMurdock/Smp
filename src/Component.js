@@ -43,7 +43,6 @@ class Component extends Box {
    * @param {Object} config
    */
   constructor (config) {
-    config.baseCls = config.baseCls || 'smp-component';
     super(config);
 
     this._owner;
@@ -51,11 +50,15 @@ class Component extends Box {
     this.isComponent = true;
   }
 
+  _getBaseCls () {
+    return 'smp-component';
+  }
+
   /**
    * Private.
    */
   _initBinder () {
-    let controller = this.getViewController(),
+    var controller = this.getViewController(),
         model = this.getViewModel();
 
     this._binder = new Binder({
@@ -73,7 +76,7 @@ class Component extends Box {
     this._config.set('data', data);
 
     if (this._rendered) {
-      let template = new Template(),
+      var template = new Template(),
           tpl = this.getConfig('tpl'),
           html = template.apply(tpl, data);
 
@@ -96,7 +99,7 @@ class Component extends Box {
   _onRender () {
     super._onRender();
 
-    let data = this.getConfig('data'),
+    var data = this.getConfig('data'),
         html = this.getConfig('html');
 
     if (html) {
@@ -114,10 +117,10 @@ class Component extends Box {
   _initEvents () {
     super._initEvents();
 
-    let listeners = this.getConfig('listeners');
+    var listeners = this.getConfig('listeners');
 
     if (listeners) {
-      for (let key in listeners) {
+      for (var key in listeners) {
         this.on(key, this._getListenerHandler(listeners[key]));
       }
     }

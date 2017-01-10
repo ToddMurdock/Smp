@@ -3,7 +3,7 @@
  */
 class WindowDrag {
   constructor (config) {
-    let body;
+    var body;
 
     this._dragEl = config.dragEl;
     this._window = config.window;
@@ -34,7 +34,7 @@ class WindowDrag {
   }
 
   _setOffset (event) {
-    let box = this._window.getBox(),
+    var box = this._window.getBox(),
         offset = (parseInt(box.left,10) - event.clientX) + ',' + (parseInt(box.top,10) - event.clientY);
 
     this._dragOffsetX = (parseInt(box.left,10) - event.clientX);
@@ -42,7 +42,7 @@ class WindowDrag {
   }
 
   _syncPosition (event) {
-    let el = this._window.getEl(),
+    var el = this._window.getEl(),
         left = (event.clientX + parseInt(this._dragOffsetX,10)),
         top = (event.clientY + parseInt(this._dragOffsetY,10));
 

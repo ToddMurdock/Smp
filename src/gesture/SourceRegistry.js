@@ -22,7 +22,7 @@ class SourceRegistry {
    * @param {TouchEvent} e
    */
   findDragSource (e) {
-    let target = e.target,
+    var target = e.target,
         reg = this._registry,
         len = reg.length,
         i = 0,

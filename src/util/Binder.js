@@ -27,7 +27,7 @@ class Binder {
    * Call setters
    */
   _init () {
-    let controller = this.getConfig('viewController'),
+    var controller = this.getConfig('viewController'),
         model = this.getConfig('viewModel'),
         view = this.getConfig('view');
 
@@ -71,7 +71,7 @@ class Binder {
    * @param {Component} view
    */
   _findHandler (handler, view) {
-    let controller,
+    var controller,
         owner;
 
     if (view[handler]) {
@@ -101,7 +101,7 @@ class Binder {
    * Private.
    */
   _initView () {
-    let view = this.getConfig('view');
+    var view = this.getConfig('view');
 
     view.on('render', this._onViewRender.bind(this));
     view.on('publish', this._onViewPublish.bind(this));
@@ -113,7 +113,7 @@ class Binder {
    * @param {Component} view
    */
   _onViewRender (view) {
-    let bind = view.getConfig('bind'),
+    var bind = view.getConfig('bind'),
         viewController = view.getViewController(),
         viewModel = this._findViewModel(view),
         data, key, value;
@@ -157,7 +157,7 @@ class Binder {
    * @param {Mixed} value
    */
   _syncViewModel (view, viewKey, value) {
-    let viewModel = this._findViewModel(view),
+    var viewModel = this._findViewModel(view),
         viewModelKey = this._getViewModelBindKey(viewKey);
 
     this._ignoreViewModelChange = true;
@@ -172,10 +172,10 @@ class Binder {
    * @param {String} viewKey
    */
   _getViewModelBindKey (viewKey) {
-    let view = this.getConfig('view'),
+    var view = this.getConfig('view'),
         bind = view.getConfig('bind')
 
-    for (let key in bind) {
+    for (var key in bind) {
       if (key === viewKey) {
         return bind[key];
       }
@@ -189,7 +189,7 @@ class Binder {
    * @param {Component} comp
    */
   _findViewModel (comp) {
-    let viewModel = comp.getViewModel();
+    var viewModel = comp.getViewModel();
 
     if (viewModel) {
       return viewModel;
@@ -207,7 +207,7 @@ class Binder {
   //
 
   _initViewModel () {
-    let viewModel = this.getConfig('viewModel');
+    var viewModel = this.getConfig('viewModel');
 
     if (!viewModel) {
       return false;
@@ -236,7 +236,7 @@ class Binder {
    * @param {Mixed} value
    */
   _syncViews (viewModelKey, value) {
-    let found = [],
+    var found = [],
         i, item, len, view, setter;
 
     this._findViews(viewModelKey, this.getConfig('view'), found);
@@ -264,7 +264,7 @@ class Binder {
    * @param {String} viewModelKey
    */
   _getViewSetter (view, viewModelKey) {
-    let bindKey = this._getViewBindKey(view, viewModelKey);
+    var bindKey = this._getViewBindKey(view, viewModelKey);
 
     if (bindKey) {
       return 'set' + bindKey.charAt(0).toUpperCase() + bindKey.slice(1);
@@ -278,10 +278,10 @@ class Binder {
    * bind: { <viewKey>: <viewModelKey> }
    */
   _getViewBindKey (view, viewModelKey) {
-    let bind = view.getConfig('bind'),
+    var bind = view.getConfig('bind'),
         value;
 
-    for (let key in bind) {
+    for (var key in bind) {
       value = bind[key];
 
       if (value === viewModelKey) {
@@ -301,7 +301,7 @@ class Binder {
    * @param {Component[]} views
    */
   _findViews (viewModelKey, comp, views) {
-    let bind = comp.getConfig('bind'),
+    var bind = comp.getConfig('bind'),
         i, items, len, viewKey;
 
     if (bind) {
@@ -329,7 +329,7 @@ class Binder {
    * Public.
    */
   destroy () {
-    let controller = this.getConfig('viewController'),
+    var controller = this.getConfig('viewController'),
         model = this.getConfig('viewModel');
 
     if (controller) {

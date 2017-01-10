@@ -10,7 +10,7 @@ class PagingScroller {
   }
 
   _init () {
-    let list = this._list,
+    var list = this._list,
         store = list.getStore();
 
     list.on('scrollend', this.onScrollEnd.bind(this));

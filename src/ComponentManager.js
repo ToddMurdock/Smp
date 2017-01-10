@@ -4,7 +4,7 @@
 ComponentManager.register(ContactWindow, 'contactwindow');
 
 // Now create an instance.
-let win = ComponentManager.create({
+var win = ComponentManager.create({
   type: 'contactwindow'
 });
  */
@@ -39,7 +39,7 @@ class ComponentManager {
    * @param {Object} config
    */
   create (config) {
-    let type = config.type,
+    var type = config.type,
         c = this._components[type];
 
     return new c(config);
@@ -50,7 +50,7 @@ class ComponentManager {
    * @param {Component} c
    */
   registerInstance (c) {
-    let id = c.getId();
+    var id = c.getId();
     this._instances[id] = c;
   }
 
@@ -59,7 +59,7 @@ class ComponentManager {
    * @param {Component} c
    */
   unregisterInstance (c) {
-    let id = c.getId();
+    var id = c.getId();
     delete this._instances[id];
   }
 

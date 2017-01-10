@@ -6,11 +6,14 @@ class Container extends Component {
    */
 
   constructor (config) {
-    config.baseCls = config.baseCls || 'smp-container';
     super(config);
 
     this.isContainer = true;
     this._initLayout();
+  }
+
+  _getBaseCls () {
+    return 'smp-container';
   }
 
   /**

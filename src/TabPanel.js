@@ -11,7 +11,6 @@ class TabPanel extends Component {
    * Private.
    */
   constructor (config) {
-    config.baseCls = config.baseCls || 'smp-tabpanel';
     config.data = undefined;
     config.html = undefined;
     config.tabPosition = config.tabPosition || 'top';
@@ -19,6 +18,10 @@ class TabPanel extends Component {
     super(config);
 
     this.isTabPanel = true;
+  }
+
+  _getBaseCls () {
+    return 'smp-tabpanel';
   }
 
   /**
@@ -33,7 +36,7 @@ class TabPanel extends Component {
   }
 
   _doLayout () {
-    let tabPosition = this.getConfig('tabPosition'),
+    var tabPosition = this.getConfig('tabPosition'),
         bodyCls = 'smp-tab-body',
         elCls = 'smp-flex';
 
@@ -53,14 +56,14 @@ class TabPanel extends Component {
    * Private.
    */
   _renderTabBar () {
-    let me = this,
+    var me = this,
         activeItem = (this.getConfig('activeItem') ||  1) - 1,
         tabPosition = this.getConfig('tabPosition'),
         items = me.getConfig('items'),
         buttons = [];
 
     items.forEach(function (comp, index) {
-      let btnCfg = {
+      var btnCfg = {
         handler: me._onTabClick,
         pressed: activeItem === index,
         scope: me,
@@ -90,7 +93,7 @@ class TabPanel extends Component {
 
   _onTabClick (btn) {
     if (btn.pressed === true) {
-      let index = this._indexOfTab(btn);
+      var index = this._indexOfTab(btn);
 
       if (!isNaN(index)) {
         this._tabBody.setActiveItem(index + 1);
@@ -99,7 +102,7 @@ class TabPanel extends Component {
   }
 
   _indexOfTab (btn) {
-    let btns = this._tabBar.getLayoutItems(),
+    var btns = this._tabBar.getLayoutItems(),
         len = btns.length,
         i = 0;
 

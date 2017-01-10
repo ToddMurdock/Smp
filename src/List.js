@@ -1,6 +1,6 @@
 /**
  * @usage
-let store = new Store(...);
+var store = new Store(...);
 
 {
   itemCls: 'thumb',
@@ -29,14 +29,6 @@ class List extends Component {
    * select
    */
 
-  constructor (config) {
-    config.baseCls = 'smp-list';
-    super(config);
-
-    this._store = this.getConfig('store');
-    this.isList = true;
-  }
-
   /**
    * Public.
    */
@@ -44,10 +36,25 @@ class List extends Component {
     return this._store;
   }
 
+  /**
+   * Private.
+   * @param {Object} config
+   */
+  constructor (config) {
+    super(config);
+
+    this._store = this.getConfig('store');
+    this.isList = true;
+  }
+
+  _getBaseCls () {
+    return 'smp-list';
+  }
+
   _onRender () {
     super._onRender();
 
-    let store = this._store;
+    var store = this._store;
 
     if (store.isLoaded()) {
       this._renderItems(store.getRecords());
@@ -71,7 +78,7 @@ class List extends Component {
    * @param {MouseEvent} event
    */
   _onElClick (event) {
-    let target = event.target,
+    var target = event.target,
         cs = target.classList,
         index;
 
@@ -86,7 +93,7 @@ class List extends Component {
    * @param {Event} event
    */
   _onScroll (e) {
-    let dom = this._el.dom,
+    var dom = this._el.dom,
         pad = 10;
 
     // scrollTop refers to the top of the scroll position, which will be scrollHeight - offsetHeight
@@ -112,7 +119,7 @@ class List extends Component {
    * @param {HTMLElement} target
    */
   _indexOf (target) {
-    let cn = this._getRenderedItems(),
+    var cn = this._getRenderedItems(),
         i = 0,
         len = cn.length;
 
@@ -130,7 +137,7 @@ class List extends Component {
    * @param {Number} index
    */
   _getAt (index) {
-    let items = this._getRenderedItems();
+    var items = this._getRenderedItems();
     return items[index];
   }
 
@@ -141,7 +148,7 @@ class List extends Component {
    * @param {Object} change
    */
   _onStoreDataChange (store, record, change) {
-    let index = store.indexOf(record),
+    var index = store.indexOf(record),
         el = this._getAt(index),
         itemCls, itemTpl, newEl, template;
 
@@ -176,7 +183,7 @@ class List extends Component {
   }
 
   _removedRenderedItems () {
-    let dom = this._el.dom;
+    var dom = this._el.dom;
 
     while (dom.firstChild) {
       dom.removeChild(dom.firstChild);
@@ -188,20 +195,20 @@ class List extends Component {
    * @param {Model[]} records
    */
   _renderItems (records) {
-    let me = this,
+    var me = this,
         el = me._el,
         template = new Template(),
         itemCls = this.getConfig('itemCls'),
         itemTpl = this.getConfig('itemTpl');
 
     records.forEach(function (record) {
-      let itemEl = me._renderItem(template, itemCls, itemTpl, record.getData());
+      var itemEl = me._renderItem(template, itemCls, itemTpl, record.getData());
       el.appendChild(itemEl);
     });
   }
 
   _renderItem (template, itemCls, itemTpl, data) {
-    let dom = Dom.create(template.apply(itemTpl, data)),
+    var dom = Dom.create(template.apply(itemTpl, data)),
         list = dom.classList;
 
     list.add('list-item');

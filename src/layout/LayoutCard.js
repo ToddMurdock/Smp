@@ -48,7 +48,7 @@ class LayoutCard extends Layout {
    * @param {Number} index
    */
   _setItemCls (item, index) {
-    let activeCls = 'smp-card-active-item',
+    var activeCls = 'smp-card-active-item',
         activeIndex = this.getConfig('activeItem') - 1;
 
     item.addCls('smp-card-item');

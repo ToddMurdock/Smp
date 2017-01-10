@@ -13,7 +13,7 @@ class SearchField extends Field {
   }
 
   getStore () {
-    let store = this.getConfig('store');
+    var store = this.getConfig('store');
 
     if (typeof store === 'string') {
       store = StoreManager.getStore(store);

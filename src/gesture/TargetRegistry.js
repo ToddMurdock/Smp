@@ -23,7 +23,7 @@ class TargetRegistry {
    * @return {Object}
    */
   findDropTarget (e) {
-    let reg = this._registry,
+    var reg = this._registry,
         len = reg.length,
         i = 0,
         target;
@@ -46,7 +46,7 @@ class TargetRegistry {
    * @param {DragEvent/TouchEvent} e
    */
   _isDropInTarget (target, e) {
-    let event = e.changedTouches ? e.changedTouches[0] : e,
+    var event = e.changedTouches ? e.changedTouches[0] : e,
         x = event.clientX,
         y = event.clientY,
         box = target.getBox();

@@ -34,7 +34,7 @@ class Dom {
    * @param {String} html
    */
   static create (html) {
-    let div = document.createElement('div');
+    var div = document.createElement('div');
 
     div.innerHTML = html;
     return div.firstChild;
@@ -70,7 +70,7 @@ class Dom {
    * @param {String} cls
    */
   static addCls (element, cls) {
-    let split = cls.split(' ');
+    var split = cls.split(' ');
 
     if (split.length > 1) {
       split.forEach(function (item) {
@@ -80,7 +80,7 @@ class Dom {
       return;
     }
 
-    let cs = element.classList;
+    var cs = element.classList;
 
     if (!cs.contains(cls)) {
       cs.add(cls);
@@ -93,7 +93,7 @@ class Dom {
    * @param {String} cls
    */
   static removeCls (element, cls) {
-    let split = cls.split(' ');
+    var split = cls.split(' ');
 
     if (split.length > 1) {
       split.forEach(function (item) {
@@ -103,7 +103,7 @@ class Dom {
       return;
     }
 
-    let cs = element.classList;
+    var cs = element.classList;
 
     if (cs.contains(cls)) {
       cs.remove(cls);
@@ -125,7 +125,7 @@ class Dom {
    * @param {Number} [height]
    */
   static setSize (element, width, height) {
-    let style = element.style;
+    var style = element.style;
 
     if (height) {
       style.height = height + 'px';
@@ -187,6 +187,6 @@ class Dom {
 }
 
 Dom.onReady(function () {
-  let body = document.getElementsByTagName('BODY')[0];
+  var body = document.getElementsByTagName('BODY')[0];
   Dom.addCls(body, 'smp-' + Device.device());
 });

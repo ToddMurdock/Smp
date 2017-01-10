@@ -47,13 +47,13 @@ class Ajax {
     // Any variable used more than once is var'd here because
     // minification will munge the variables whereas it can't munge
     // the object access.
-    let headers = params.headers || {},
+    var headers = params.headers || {},
         body = params.body,
         method = params.method || (body ? 'POST' : 'GET'),
         called = false;
 
-    let reqfields = ['responseType', 'withCredentials', 'timeout', 'onprogress'];
-    let req = getRequest(params.cors);
+    var reqfields = ['responseType', 'withCredentials', 'timeout', 'onprogress'];
+    var req = getRequest(params.cors);
 
     function cb(statusCode, responseText) {
       return function () {

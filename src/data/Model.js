@@ -18,7 +18,7 @@ class Model {
    * @param {Mixed} value
    */
   set (key, value) {
-    let oldValue = this.get(key);
+    var oldValue = this.get(key);
 
     if (value !== oldValue) {
       this._data[key] = value;
@@ -68,7 +68,7 @@ class Model {
     if (config) {
       this._config = config;
 
-      for (let key in config) {
+      for (var key in config) {
         this['_' + key] = config[key];
       }
     }

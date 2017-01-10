@@ -17,7 +17,7 @@ class PagingStore extends Store {
    * Returns the data for the current page.
    */
   getPageRecords () {
-    let page = this.getPage(),
+    var page = this.getPage(),
         pageSize = this.getPageSize(),
         begin, end;
 
@@ -85,7 +85,7 @@ class PagingStore extends Store {
    * @param {Object} [options]
    */
   loadPage (page, options) {
-    let size = this.getPageSize();
+    var size = this.getPageSize();
 
     this._page = page;
 

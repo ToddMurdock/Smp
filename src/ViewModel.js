@@ -17,7 +17,7 @@ class ViewModel {
     if (config) {
       this._config = config;
 
-      for (let key in config) {
+      for (var key in config) {
         this['_' + key] = config[key];
       }
     }
@@ -66,7 +66,7 @@ class ViewModel {
    * @param {Mixed} value
    */
   set (key, value) {
-    let oldValue = this['_' + key];
+    var oldValue = this['_' + key];
 
     if (value !== oldValue) {
       this._data[key] = value;

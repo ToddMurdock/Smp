@@ -50,7 +50,7 @@ class DragDrop {
    * }
    */
   registerSource (config) {
-    let source = config.source;
+    var source = config.source;
 
     if (Device.isDesktop()) {
       this._addDragListeners(source);
@@ -66,7 +66,7 @@ class DragDrop {
    * @param {Component} source
    */
   _addDragListeners (source) {
-    let el = source.getEl();
+    var el = source.getEl();
 
     el.on('dragstart', this._onDragStart.bind(this));
     // el.on('drag', this._onDrag.bind(this));
@@ -88,7 +88,7 @@ class DragDrop {
    * @param {Component} source
    */
   _addTouchListeners (source) {
-    let el = source.getEl();
+    var el = source.getEl();
 
     el.on('contextmenu', function (e) {
       e.preventDefault();
@@ -109,7 +109,7 @@ class DragDrop {
    * }
    */
   registerTarget (config) {
-    let target = config.target;
+    var target = config.target;
 
     if (Device.isDesktop()) {
       this._addDropListeners(target);
@@ -119,7 +119,7 @@ class DragDrop {
   }
 
   _addDropListeners (target) {
-    let el = target.getEl();
+    var el = target.getEl();
 
     el.on('dragover', this._onDragOver.bind(this));
     el.on('drop', this._onDrop.bind(this));
@@ -132,7 +132,7 @@ class DragDrop {
   }
 
   _callDragOverTarget (e) {
-    let regItem = this._targetRegistry.findDropTarget(e),
+    var regItem = this._targetRegistry.findDropTarget(e),
         canDropResult, dragEvent;
 
     if (regItem && regItem.canDrop) {
@@ -241,7 +241,7 @@ class DragDrop {
    * @param {TouchEvent} e
    */
   _callDragSource (e) {
-    let regItem = this._sourceRegistry.findDragSource(e),
+    var regItem = this._sourceRegistry.findDragSource(e),
         source;
 
     if (regItem) {
@@ -253,7 +253,7 @@ class DragDrop {
   }
 
   _callDropTarget (e) {
-    let regItem = this._targetRegistry.findDropTarget(e),
+    var regItem = this._targetRegistry.findDropTarget(e),
         dropEvent;
 
     if (regItem) {

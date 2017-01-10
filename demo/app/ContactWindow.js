@@ -7,7 +7,7 @@ class ContactWindow extends Window {
 
   constructor (config) {
     // TODO: Mobile friendly
-    let isDesktop = Device.isDesktop();
+    var isDesktop = Device.isDesktop();
 
     super({
       fullscreen: !isDesktop,

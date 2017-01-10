@@ -9,7 +9,7 @@ class DragGhost {
    * @param {HTMLElement} target
    */
   render (target) {
-    let dom = target.cloneNode(true);
+    var dom = target.cloneNode(true);
 
     dom.style.position = 'absolute';
     document.body.appendChild(dom);
@@ -30,7 +30,7 @@ class DragGhost {
    * @param {TouchEvent} e
    */
   position (e) {
-    let touch = e.changedTouches[0],
+    var touch = e.changedTouches[0],
         el = this.dom,
         h, style, w;
 

@@ -12,7 +12,7 @@ class MainController extends ViewController {
    * @param {Model} contact
    */
   onContactsListSelect (list, contact) {
-    let win = new ContactWindow({
+    var win = new ContactWindow({
       contact: contact
     });
 
