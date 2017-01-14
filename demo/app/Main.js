@@ -74,6 +74,12 @@ class View {
           iconCls: 'fa fa-id-card',
           text: 'Card 2',
           type: 'button'
+        },
+        {
+          handler: 'onSlideOutButtonClick',
+          iconCls: 'fa fa-window-maximize',
+          text: 'Slide Out',
+          type: 'button'
         }
       ],
       layout: {

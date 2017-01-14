@@ -8,7 +8,7 @@
   -webkit-transition: opacity 400ms ease-in;
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
-	z-index: 10000;
+	/* z-index: 10000; */
 }
 
 .smp-window {

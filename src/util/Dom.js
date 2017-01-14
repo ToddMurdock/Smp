@@ -120,6 +120,14 @@ class Dom {
 
   /**
    * Public.
+   */
+  static getViewportSize () {
+    var el = document.documentElement;
+    return { height: el.clientHeight, width: el.clientWidth };
+  }
+
+  /**
+   * Public.
    * @param {HTMLElement} element
    * @param {Number} [width]
    * @param {Number} [height]

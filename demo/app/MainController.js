@@ -7,6 +7,32 @@ class MainController extends ViewController {
     this.getViewModel().set('activeCard', 2);
   }
 
+  onSlideOutButtonClick () {
+    new Sheet({
+      items: [
+        {
+          flex: 1,
+          html: 'Item 1',
+          style: 'background-color: #f1f1f1; padding: 1em',
+          type: 'component'
+        },
+        {
+          flex: 1,
+          html: 'Item 2',
+          style: 'background-color: #d0d0d0; padding: 1em',
+          type: 'component'
+        }
+      ],
+      layout: {
+        type: 'column'
+      },
+      modal: true,
+      side: 'left',
+      title: 'Slide Out Panel',
+      width: 400
+    }).show()
+  }
+
   /**
    * @param {List} list
    * @param {Model} contact

@@ -1,6 +1,11 @@
 class Window extends Panel {
 
   /**
+   * CONFIG
+   * {Boolean} modal
+   */
+
+  /**
    * Public.
    */
   show () {
@@ -36,12 +41,17 @@ class Window extends Panel {
    * Private.
    */
   _renderModal () {
-    var el = new Element('<div class="smp-modal"></div>');
+    var modal = this.getConfig('modal'),
+        el;
 
-    el.appendChild(this._el);
-    document.body.appendChild(el.dom);
+    if (modal) {
+      el = new Element('<div class="smp-modal"></div>');
 
-    this._modelEl = el
+      el.appendChild(this._el);
+      document.body.appendChild(el.dom);
+
+      this._modalEl = el;
+    }
   }
 
   /**
@@ -79,8 +89,12 @@ class Window extends Panel {
    * Private.
    */
   _afterDestroy () {
-    this._modelEl.destroy();
-    delete this._modelEl;
+    var modalEl = this._modalEl;
+
+    if (modalEl) {
+      modalEl.destroy();
+      modalEl = undefined;
+    }
   }
 }
 

@@ -72,6 +72,7 @@ class ContactWindow extends Window {
       layout: {
         type: 'column'
       },
+      modal: true,
       title: 'Edit Contact',
       viewController: new ContactWindowController(),
       viewModel: new ContactWindowModel(),

@@ -145,8 +145,8 @@ class Box {
     this._el = el;
     this._rendered = true;
     this._onRender();
-    this._emit('render', this);
     this._initEvents();
+    this._emit('render', this);
   }
 
   /**
@@ -162,22 +162,7 @@ class Box {
   /**
    * Private.
    */
-  _initEvents () {
-    var fullscreen = this.getConfig('fullscreen');
-
-    if (fullscreen) {
-      this._boundOnWindowResize = this._onWindowResize.bind(this);
-      Dom.on(window, 'resize', this._boundOnWindowResize);
-    }
-  }
-
-  /**
-   * Private.
-   */
-  _onWindowResize () {
-    var el = document.documentElement;
-    this.setSize(el.clientWidth, el.clientHeight);
-  }
+  _initEvents () {}
 
   /**
    * Public.
@@ -238,8 +223,8 @@ class Box {
    * Private.
    */
   _beforeDestroy () {
-    if (this._boundOnWindowResize) {
-      Dom.un(window, 'resize', this._boundOnWindowResize);
+    if (this._boundSyncFullscreen) {
+      Dom.un(window, 'resize', this._boundSyncFullscreen);
     }
 
     this._event.destroy();

@@ -1,0 +1,64 @@
+.smp-sheet {
+  box-shadow: 0px 0px 7px #333;
+  position: fixed;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.smp-sheet-bottom {
+  bottom: -webkit-calc(-100%);
+  bottom: -moz-calc(-100%);
+  bottom: calc(-100%);
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.smp-sheet-show-bottom {
+  bottom: 0;
+}
+
+.smp-sheet-left {
+  bottom: 0;
+  height: 100%;
+  left: -webkit-calc(-100%);
+  left: -moz-calc(-100%);
+  left: calc(-100%);
+  top: 0;
+}
+
+.smp-sheet-show-left {
+  left: 0;
+}
+
+.smp-sheet-right {
+  bottom: 0;
+  height: 100%;
+  right: -webkit-calc(-100%);
+  right: -moz-calc(-100%);
+  right: calc(-100%);
+  top: 0;
+}
+
+.smp-sheet-show-right {
+  right: 0;
+}
+
+.smp-sheet-top {
+  left: 0;
+  right: 0;
+  top: -webkit-calc(-100%);
+  top: -moz-calc(-100%);
+  top: calc(-100%);
+  width: 100%;
+}
+
+.smp-sheet-show-top {
+  top: 0;
+}
+
+.smp-sheet .smp-body {
+  background-color: #fff;
+}

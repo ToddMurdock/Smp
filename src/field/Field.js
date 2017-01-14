@@ -68,7 +68,7 @@ class Field extends Component {
   _getRenderTpl () {
     return '<div id="{id}" class="smp-field smp-flex smp-flex-row {cls}" style="{style}">' +
         '<span class="label">{label}</span>' +
-        '<input class="field smp-flex-column-item" type="{inputType}">' +
+        '<input class="field smp-flex-row-item" type="{inputType}">' +
       '</div>';
   }
 
