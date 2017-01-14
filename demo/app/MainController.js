@@ -28,8 +28,8 @@ class MainController extends ViewController {
       },
       modal: true,
       side: 'left',
-      title: 'Slide Out Panel',
-      width: 400
+      style: 'max-width: 300px; width: 40%;',
+      title: 'Slide Out Panel'
     }).show()
   }
 

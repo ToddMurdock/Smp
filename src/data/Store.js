@@ -244,21 +244,6 @@ class Store {
   }
 
   /**
-   * Private.
-   * @param {Object} a
-   * @param {Object} b
-   */
-  _apply (a, b) {
-    a = a || {};
-
-    for (var key in b) {
-      a[key] = b[key];
-    }
-
-    return a;
-  }
-
-  /**
    * Public.
    */
   destroy () {

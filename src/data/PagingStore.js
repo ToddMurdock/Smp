@@ -85,11 +85,13 @@ class PagingStore extends Store {
    * @param {Object} [options]
    */
   loadPage (page, options) {
+    options = options || {};
+
     var size = this.getPageSize();
 
     this._page = page;
 
-    options = this._apply(options, {
+    Object.assign(options, {
       limit: size,
       page: page,
       start: (page - 1) * size

@@ -63,20 +63,19 @@ class TabPanel extends Component {
         buttons = [];
 
     items.forEach(function (comp, index) {
-      var btnCfg = {
-        handler: me._onTabClick,
-        pressed: activeItem === index,
-        scope: me,
-        text: comp.title,
-        toggleGroup: me.getId() + '-tabs',
-        type: 'button'
-      };
+      var baseCfg = {
+            handler: me._onTabClick,
+            pressed: activeItem === index,
+            scope: me,
+            toggleGroup: me.getId() + '-tabs',
+            type: 'button'
+          },
+          tabCfg = comp.tabConfig,
+          cfg = tabCfg ? tabCfg : (comp.title ? { text: comp.title } : undefined);
 
-      if (comp.tabConfig) {
-        me._applyIf(btnCfg, comp.tabConfig);
-      }
+      Object.assign(cfg, baseCfg);
 
-      buttons.push(btnCfg);
+      buttons.push(cfg);
     });
 
     me._tabBar = new Container({

@@ -193,34 +193,6 @@ class Box {
 
   /**
    * Private.
-   * @param {Object} a
-   * @param {Object} b
-   */
-  _apply (a, b) {
-    a = a || {};
-
-    for (var key in b) {
-      a[key] = b[key];
-    }
-  }
-
-  /**
-   * Private.
-   * @param {Object} a
-   * @param {Object} b
-   */
-  _applyIf (a, b) {
-    a = a || {};
-
-    for (var key in b) {
-      if (!a[key]) {
-        a[key] = b[key];
-      }
-    }
-  }
-
-  /**
-   * Private.
    */
   _beforeDestroy () {
     if (this._boundSyncFullscreen) {
