@@ -16,9 +16,12 @@ class Window extends Panel {
    * Private.
    */
   constructor (config) {
-    config.closable = true;
-    config.draggable = true;
-    config.renderTo = document.body;
+    Object.assign(config, {
+      closable: true,
+      draggable: true,
+      renderTo: document.body
+    });
+
     super(config);
 
     this.isWindow = true;

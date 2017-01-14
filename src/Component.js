@@ -90,7 +90,25 @@ class Component extends Box {
    * Public.
    */
   getData () {
-    return this._config.get('data');
+    return this.getConfig('data');
+  }
+
+  /**
+   * Public.
+   * @param {String} html
+   */
+  setHtml (html) {
+    this._config.set('html', html);
+
+    if (this._rendered) {
+      this.update(html);
+    }
+
+    this._publish('html', html);
+  }
+
+  getHtml () {
+    return this.getConfig('html');
   }
 
   /**

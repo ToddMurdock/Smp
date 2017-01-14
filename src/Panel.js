@@ -13,10 +13,12 @@ class Panel extends Component {
    * Private.
    */
   constructor (config) {
-    config.bodyHtml = config.html;
-    config.data = undefined;
-    config.html = undefined;
-    config.tpl = undefined;
+    Object.assign(config, {
+      bodyHtml: config.html,
+      data: undefined,
+      html: undefined,
+      tpl: undefined
+    });
 
     super(config);
 

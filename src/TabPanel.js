@@ -11,10 +11,13 @@ class TabPanel extends Component {
    * Private.
    */
   constructor (config) {
-    config.data = undefined;
-    config.html = undefined;
-    config.tabPosition = config.tabPosition || 'top';
-    config.tpl = undefined;
+    Object.assign(config, {
+      data: undefined,
+      html: undefined,
+      tabPosition: config.tabPosition || 'top',
+      tpl: undefined
+    });
+
     super(config);
 
     this.isTabPanel = true;

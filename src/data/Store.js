@@ -133,6 +133,7 @@ class Store {
 
     this._isLoading = true;
     this._currentLoadOptions = options;
+    this._emit('beforeload', this);
   }
 
   /**

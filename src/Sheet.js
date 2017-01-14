@@ -25,9 +25,12 @@ class Sheet extends Panel {
    * Private.
    */
   constructor (config) {
-    config.closable = true;
-    config.renderTo = document.body;
-    config.side = config.side || 'left';
+    Object.assign(config, {
+      closable: true,
+      renderTo: document.body,
+      side: config.side || 'left'
+    });
+
     super(config);
   }
 
