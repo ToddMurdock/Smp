@@ -80,6 +80,8 @@ class Sheet extends Panel {
         side = this.getConfig('side');
 
     // For cross browser transition events.
+    // sitepoint.com/css3-animation-javascript-event-handlers
+    // github.com/magnetikonline/cssanimevent
     // callmenick.com/post/cross-browser-transition-animation-events-modernizr
     me._el.on('transitionend', function () {
       me.close();
