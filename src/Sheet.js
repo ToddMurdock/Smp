@@ -79,15 +79,42 @@ class Sheet extends Panel {
     var me = this,
         side = this.getConfig('side');
 
-    // For cross browser transition events.
-    // sitepoint.com/css3-animation-javascript-event-handlers
-    // github.com/magnetikonline/cssanimevent
-    // callmenick.com/post/cross-browser-transition-animation-events-modernizr
-    me._el.on('transitionend', function () {
+    me._prefixEvent(me._el, 'TransitionEnd', function () {
+      me._closing = true;
       me.close();
     });
 
     this.removeCls('smp-sheet-show-' + side);
+
+    // Backup incase 'transitionend' does not fire
+    // CSS transition is for 500 ms.
+    window.setTimeout(function () {
+      if (!me._closing) {
+        me.close();
+      }
+    }, 750);
+  }
+
+  /**
+   * Prefix CSS transition events for the following browsers.
+   * W3C, standard, Firefox, webkit, Opera, IE10
+   */
+  _prefixEvent (element, type, callback) {
+    var pfx = ['webkit', 'moz', 'MS', 'o', ''];
+
+    for (var p = 0; p < pfx.length; p++) {
+      if (!pfx[p]) {
+        type = type.toLowerCase();
+      }
+
+      // Example: If type = 'TransitionEnd', then:
+      // webkitTransitionEnd
+      // mozTransitionEnd
+      // MSTransitionEnd
+      // oTransitionEnd
+      // transitionend
+      element.on(pfx[p]+type, callback, false);
+    }
   }
 
   /**
