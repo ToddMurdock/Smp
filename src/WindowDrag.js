@@ -52,7 +52,8 @@ class WindowDrag {
 
   _onDragOver (event) {
     this._syncPosition(event);
-    event.preventDefault();
+    // Commenting this out prevents the browser from indicating drop allowed.
+    // event.preventDefault();
 
     return false;
   }
