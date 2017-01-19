@@ -4,9 +4,7 @@
 }
 
 .smp-sheet-bottom {
-  bottom: -webkit-calc(-100%);
-  bottom: -moz-calc(-100%);
-  bottom: calc(-100%);
+  bottom: -1500px;
   left: 0;
   right: 0;
   width: 100%;
@@ -24,9 +22,7 @@
 .smp-sheet-left {
   bottom: 0;
   height: 100%;
-  left: -webkit-calc(-100%);
-  left: -moz-calc(-100%);
-  left: calc(-100%);
+  left: -1500px;
   top: 0;
 
   -moz-transition: left 0.5s ease-in-out;
@@ -42,9 +38,7 @@
 .smp-sheet-right {
   bottom: 0;
   height: 100%;
-  right: -webkit-calc(-100%);
-  right: -moz-calc(-100%);
-  right: calc(-100%);
+  right: -1500px;
   top: 0;
 
   -moz-transition: right 0.5s ease-in-out;
@@ -60,9 +54,7 @@
 .smp-sheet-top {
   left: 0;
   right: 0;
-  top: -webkit-calc(-100%);
-  top: -moz-calc(-100%);
-  top: calc(-100%);
+  top: -1500px;
   width: 100%;
 
   -moz-transition: top 0.5s ease-in-out;
