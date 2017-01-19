@@ -149,7 +149,7 @@ class Element {
 
     me.clearListeners();
 
-    if (dom === document.body) {
+    if (dom === document || dom === document.body) {
       return;
     }
 
