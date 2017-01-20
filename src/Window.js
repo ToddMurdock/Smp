@@ -74,9 +74,9 @@ class Window extends Panel {
    * Private.
    */
   _initDraggable () {
-    this._drag = new WindowDrag({
-      dragEl: this._header._titleEl,
-      window: this
+    this._drag = new Drag({
+      element: this.getEl(),
+      handle: this._header.getTitleEl()
     });
   }
 

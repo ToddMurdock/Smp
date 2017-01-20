@@ -30,6 +30,13 @@ class Header {
   }
 
   /**
+   * Public.
+   */
+  getTitleEl () {
+    return this._titleEl;
+  }
+
+  /**
    * Private.
    */
   constructor (config) {

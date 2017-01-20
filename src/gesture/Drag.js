@@ -1,21 +1,32 @@
 /**
  * github.com/giraysam/viiny-dragger/blob/master/src/index.js
+ * 
+ * @usage
+var draggable = new WindowDrag({
+  element: aElement
+});
  */
-class WindowDrag {
+class Drag {
+
+  /**
+   * CONFIG
+   * {Element} element
+   * {Element} handle (Optional)
+   */
+
   constructor (config) {
-    var me = this,
-        body;
+    var me = this;
 
-    me._dragEl = config.dragEl;
-    me._window = config.window;
+    me.element = config.element;
+    me.handle = config.handle || me.element;
 
-    me._dragEl.dom.setAttribute('draggable', true);
+    me.handle.dom.setAttribute('draggable', true);
 
-    me._dragEl.on('mousedown', function (e) {
+    me.handle.on('mousedown', function (e) {
       me._mouseDownHandler(e);
     });
 
-    me._dragEl.on('touchstart', function (e) {
+    me.handle.on('touchstart', function (e) {
       me._mouseDownHandler(e.changedTouches[0]);
     });
   }
@@ -58,7 +69,7 @@ class WindowDrag {
   _mousemoveHandler (e) {
     var mouseX = document.all ? window.event.clientX : e.pageX,
         mouseY = document.all ? window.event.clientY : e.pageY,
-        el = this._window.getEl();
+        el = this.element;
 
     if (this.isDrag === false) {
       return;
@@ -77,7 +88,7 @@ class WindowDrag {
   }
 
   _setOffset (event) {
-    var box = this._window.getBox(),
+    var box = this.element.getBox(),
         offset = (parseInt(box.left, 10) - event.clientX) + ',' + (parseInt(box.top, 10) - event.clientY);
 
     this._dragOffsetX = (parseInt(box.left,10) - event.clientX);
@@ -85,7 +96,7 @@ class WindowDrag {
   }
 
   _syncPosition (event) {
-    var el = this._window.getEl(),
+    var el = this.element,
         left = (event.clientX + parseInt(this._dragOffsetX,10)),
         top = (event.clientY + parseInt(this._dragOffsetY,10));
 
@@ -94,7 +105,7 @@ class WindowDrag {
   }
 
   destroy () {
-    this._dragEl.clearListeners();
+    this.handle.clearListeners();
 
     if (this._bodyEl) {
       this._bodyEl.clearListeners();
