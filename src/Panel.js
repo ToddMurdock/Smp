@@ -4,10 +4,46 @@ class Panel extends Component {
    * CONFIG
    * {String} bodyStyle
    * {Boolean} closable
+   * {String} iconCls
    * {Components[]} items
    * {Layout/Layout Config} layout
    * {String} title
    */
+
+  /**
+   * Public.
+   */
+  close () {
+    this.destroy();
+  }
+
+  /**
+   * Public.
+   */
+  getLayoutEl () {
+    return this._bodyEl;
+  }
+
+  /**
+   * Public.
+   */
+  getLayoutItems () {
+    return this._items;
+  }
+
+  /**
+   * Public.
+   */
+  setIconCls (cls) {
+    this._header.setIconCls(cls);
+  }
+
+  /**
+   * Public.
+   */
+  setTitle (title) {
+    this._header.setTitle(title);
+  }
 
   /**
    * Private.
@@ -59,6 +95,7 @@ class Panel extends Component {
     var closable = this.getConfig('closable'),
         header = new Header({
           closable: closable,
+          iconCls: this.getConfig('iconCls'),
           renderTo: this._el,
           title: this.getConfig('title')
         });
@@ -75,13 +112,6 @@ class Panel extends Component {
    */
   _onCloseClick () {
     this.close();
-  }
-
-  /**
-   * Public.
-   */
-  close () {
-    this.destroy();
   }
 
   /**
@@ -138,20 +168,6 @@ class Panel extends Component {
       cmp.render(this._bodyEl);
       this._items[i] = cmp;
     }
-  }
-
-  /**
-   * Public.
-   */
-  getLayoutEl () {
-    return this._bodyEl;
-  }
-
-  /**
-   * Public.
-   */
-  getLayoutItems () {
-    return this._items;
   }
 
   /**

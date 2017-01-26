@@ -158,11 +158,15 @@ class Binder {
    */
   _syncViewModel (view, viewKey, value) {
     var viewModel = this._findViewModel(view),
-        viewModelKey = this._getViewModelBindKey(viewKey);
+        viewModelKey;
 
-    this._ignoreViewModelChange = true;
-    viewModel.set(viewModelKey, value);
-    this._ignoreViewModelChange = false;
+    if (viewModel) {
+      viewModelKey = this._getViewModelBindKey(viewKey);
+
+      this._ignoreViewModelChange = true;
+      viewModel.set(viewModelKey, value);
+      this._ignoreViewModelChange = false;
+    }
   }
 
   /**

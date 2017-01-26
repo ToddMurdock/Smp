@@ -12,3 +12,5 @@ class ContactsStore extends Store {
     });
   }
 }
+
+StoreManager.register(ContactsStore, 'Contacts');

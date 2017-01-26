@@ -3,8 +3,10 @@ class Box {
   /**
    * CONFIG
    * {String} cls
-   * {Object} listeners
+   * {Object} data
+   * {String} html
    * {Boolean} fullscreen
+   * {String} tpl
    * {String} style
    */
 
@@ -51,6 +53,45 @@ class Box {
    */
   removeCls (cls) {
     this._el.removeCls(cls);
+  }
+
+  /**
+   * Public
+   * @param {Object} data
+   */
+  setData (data) {
+    this._config.set('data', data);
+
+    if (this._rendered) {
+      var template = new Template(),
+          tpl = this.getConfig('tpl'),
+          html = template.apply(tpl, data);
+
+      this.update(html);
+    }
+  }
+
+  /**
+   * Public.
+   */
+  getData () {
+    return this.getConfig('data');
+  }
+
+  /**
+   * Public.
+   * @param {String} html
+   */
+  setHtml (html) {
+    this._config.set('html', html);
+
+    if (this._rendered) {
+      this.update(html);
+    }
+  }
+
+  getHtml () {
+    return this.getConfig('html');
   }
 
   /**
@@ -153,8 +194,18 @@ class Box {
    * Private.
    */
   _onRender () {
-    var height = this.getConfig('height'),
+    var data = this.getConfig('data'),
+        html = this.getConfig('html'),
+        height = this.getConfig('height'),
         width = this.getConfig('width');
+
+    if (html) {
+      this.update(html);
+    }
+
+    else if (data) {
+      this.setData(data);
+    }
 
     this.setSize(width, height);
   }
@@ -198,14 +249,13 @@ class Box {
     if (this._boundSyncFullscreen) {
       Dom.un(window, 'resize', this._boundSyncFullscreen);
     }
-
-    this._event.destroy();
   }
 
   /**
    * Private.
    */
   _afterDestroy () {
+    this._event.destroy();
     ComponentManager.unregisterInstance(this);
   }
 

@@ -25,8 +25,11 @@ class Sheet extends Panel {
    * Private.
    */
   constructor (config) {
+    if (typeof config.closable !== 'boolean') {
+      config.closable = true;
+    }
+
     Object.assign(config, {
-      closable: true,
       renderTo: document.body,
       side: config.side || 'left'
     });
@@ -76,12 +79,20 @@ class Sheet extends Panel {
    * Private.
    */
   _onCloseClick () {
+    this.close();
+  }
+
+  /**
+   * Override.
+   * Public.
+   */
+  close () {
     var me = this,
         side = this.getConfig('side');
 
     me._prefixEvent(me._el, 'TransitionEnd', function () {
       me._closing = true;
-      me.close();
+      me.destroy();
     });
 
     this.removeCls('smp-sheet-show-' + side);
@@ -90,7 +101,7 @@ class Sheet extends Panel {
     // CSS transition is for 500 ms.
     window.setTimeout(function () {
       if (!me._closing) {
-        me.close();
+        me.destroy();
       }
     }, 750);
   }

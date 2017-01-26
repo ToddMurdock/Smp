@@ -18,9 +18,7 @@ class Component extends Box {
   /**
    * CONFIG
    * {Object} bind
-   * {Object} data
-   * {String} html
-   * {String} tpl
+   * {Object} listeners
    * {ViewController} viewController
    * {ViewModel} viewModel
    */
@@ -45,7 +43,7 @@ class Component extends Box {
   constructor (config) {
     super(config);
 
-    this._owner;
+    this._owner = undefined;
     this._initBinder();
     this.isComponent = true;
   }
@@ -69,77 +67,39 @@ class Component extends Box {
   }
 
   /**
-   * Public
-   * @param {Object} data
-   */
-  setData (data) {
-    this._config.set('data', data);
-
-    if (this._rendered) {
-      var template = new Template(),
-          tpl = this.getConfig('tpl'),
-          html = template.apply(tpl, data);
-
-      this.update(html);
-    }
-
-    this._publish('data', data);
-  }
-
-  /**
-   * Public.
-   */
-  getData () {
-    return this.getConfig('data');
-  }
-
-  /**
-   * Public.
-   * @param {String} html
-   */
-  setHtml (html) {
-    this._config.set('html', html);
-
-    if (this._rendered) {
-      this.update(html);
-    }
-
-    this._publish('html', html);
-  }
-
-  getHtml () {
-    return this.getConfig('html');
-  }
-
-  /**
-   * Private.
-   */
-  _onRender () {
-    super._onRender();
-
-    var data = this.getConfig('data'),
-        html = this.getConfig('html');
-
-    if (html) {
-      this.update(html);
-    }
-
-    else if (data) {
-      this.setData(data);
-    }
-  }
-
-  /**
    * Private.
    */
   _initEvents () {
     super._initEvents();
 
-    var listeners = this.getConfig('listeners');
+    var listeners = this.getConfig('listeners'),
+        handler, scope;
 
     if (listeners) {
+      if (listeners.scope) {
+        scope = listeners.scope;
+      }
+
       for (var key in listeners) {
-        this.on(key, this._getListenerHandler(listeners[key]));
+        if (key !== 'scope') {
+          handler = listeners[key];
+
+          if (scope) {
+            if (typeof handler === 'function') {
+              handler = handler.bind(scope);
+            }
+
+            if (typeof handler === 'string') {
+              handler = scope[handler].bind(scope);
+            }
+          }
+
+          else {
+            handler = this._getListenerHandler(handler);
+          }
+
+          this.on(key, handler);
+        }
       }
     }
   }
@@ -164,8 +124,8 @@ class Component extends Box {
   /**
    * Private.
    */
-  _beforeDestroy () {
-    super._beforeDestroy();
+  _afterDestroy () {
+    super._afterDestroy();
 
     this._binder.destroy();
 

@@ -21,7 +21,7 @@ class List extends Component {
    * CONFIGS
    * {String} itemCls
    * {String} itemTpl
-   * {Store} store
+   * {String/Store} store A {Store} instance or the id of a store instance registered with {StoreManager}.
    */
 
   /**
@@ -33,7 +33,17 @@ class List extends Component {
    * Public.
    */
   getStore () {
-    return this._store;
+    var store = this.getConfig('store');
+
+    if (typeof store === 'string') {
+      store = StoreManager.getStore(store);
+
+      if (store) {
+        this._config.set('store', store);
+      }
+    }
+
+    return store;
   }
 
   /**
@@ -42,8 +52,6 @@ class List extends Component {
    */
   constructor (config) {
     super(config);
-
-    this._store = this.getConfig('store');
     this.isList = true;
   }
 
@@ -54,7 +62,7 @@ class List extends Component {
   _onRender () {
     super._onRender();
 
-    var store = this._store;
+    var store = this.getStore();
 
     if (store.isLoaded()) {
       this._renderItems(store.getRecords());
@@ -64,13 +72,15 @@ class List extends Component {
   }
 
   _initEvents () {
+    var store = this.getStore();
+
     super._initEvents();
 
     this._el.on('click', this._onElClick.bind(this));
     this._el.on('scroll', this._onScroll.bind(this));
 
-    this._store.on('datachange', this._onStoreDataChange.bind(this));
-    this._store.on('load', this._onStoreLoad.bind(this));
+    store.on('datachange', this._onStoreDataChange.bind(this));
+    store.on('load', this._onStoreLoad.bind(this));
   }
 
   /**
@@ -84,7 +94,7 @@ class List extends Component {
 
     if (cs.contains('list-item')) {
       index = this._indexOf(target);
-      this._emit('select', this, this._store.getAt(index), index, event);
+      this._emit('select', this, this.getStore().getAt(index), index, event);
     }
   }
 

@@ -1,10 +1,14 @@
 /**
  * @usage
 // Registor your Store.
-StoreManager.register(ContactsStore, 'ContactsStore');
+StoreManager.register(ContactsStore, 'Contacts');
 
 // Now create an instance.
-var win = StoreManager.create({
+var store = StoreManager.create('Contacts');
+
+// Or
+var store = StoreManager.create({
+  ...,
   type: 'ContactsStore'
 });
  */
@@ -36,11 +40,19 @@ class StoreManager {
 
   /**
    * Public.
-   * @param {Object} config
+   * @param {Object/String} config
    */
   create (config) {
-    var type = config.type,
-        s = this._stores[type];
+    var s, type;
+
+    if (typeof config === 'string') {
+      type = config;
+      config = undefined;
+    } else {
+      type = config.type;
+    }
+
+    s = this._stores[type];
 
     return new s(config);
   }

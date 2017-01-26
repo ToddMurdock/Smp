@@ -7,6 +7,14 @@
   padding: 1em;
 }
 
+.smp-header .smp-icon-wrap + .smp-title {
+  padding-left: 0;
+}
+
+.smp-header .smp-icon-wrap {
+  padding: 1em;
+}
+
 .smp-header .smp-close {
   cursor: pointer;
   padding: 1em;

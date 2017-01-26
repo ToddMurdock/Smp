@@ -3,6 +3,7 @@ class Header {
   /**
    * CONFIG
    * {Boolean} closable
+   * {String} iconCls
    * {Element} renderTo
    * {String} title
    */
@@ -37,6 +38,35 @@ class Header {
   }
 
   /**
+   * Public.
+   * @param {String} cls
+   */
+  setIconCls (cls) {
+    var el = this._iconEl,
+        oldCls;
+
+    if (el) {
+      oldCls = this.getConfig('iconCls');
+
+      if (oldCls) {
+        el.removeCls(oldCls);
+      }
+
+      this._config.set('iconCls', cls);
+      el.addCls(cls);
+    }
+  }
+
+  /**
+   * Public.
+   * @param {String} title
+   */
+  setTitle (title) {
+    this._config.set('title', title);
+    this._titleEl.update(title);
+  }
+
+  /**
    * Private.
    */
   constructor (config) {
@@ -53,9 +83,11 @@ class Header {
   render () {
     var template = new Template(),
         closable = this.getConfig('closable'),
+        iconCls = this.getConfig('iconCls'),
         renderTo = this.getConfig('renderTo'),
         data = { title: this.getConfig('title') },
         tpl = '<div class="smp-header smp-flex smp-flex-row">' +
+                (iconCls ? '<div class="smp-icon-wrap"><div class="smp-icon ' + iconCls + '"></div></div>' : '') +
                 '<div class="smp-title smp-flex-row-item">{title}</div>' +
                 (closable ? '<div class="smp-close fa fa-times"></div>' : '') +
               '</div>',
@@ -68,6 +100,10 @@ class Header {
 
     if (closable) {
       this._closeEl = new Element(Dom.select('.smp-close', el.dom));
+    }
+
+    if (iconCls) {
+      this._iconEl = new Element(Dom.select('.smp-icon', el.dom));
     }
 
     this._onRender();
@@ -140,6 +176,10 @@ class Header {
 
     if (this._closeEl) {
       this._closeEl.destroy();
+    }
+
+    if (this._iconEl) {
+      this._iconEl.destroy();
     }
 
     this._titleEl.destroy();

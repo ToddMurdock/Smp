@@ -194,7 +194,7 @@ class Dom {
   }
 }
 
-Dom.onReady(function () {
-  var body = document.getElementsByTagName('BODY')[0];
-  Dom.addCls(body, 'smp-' + Device.device());
-});
+// Dom.onReady(function () {
+//   var body = document.getElementsByTagName('BODY')[0];
+//   Dom.addCls(body, 'smp-' + Device.device());
+// });
