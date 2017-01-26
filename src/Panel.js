@@ -189,6 +189,45 @@ class Panel extends Component {
     this._header.destroy();
     super._beforeDestroy();
   }
+
+  /**
+   * Public.
+   * @param {Component} comp
+   */
+  remove (comp) {
+    var len = this._items.length,
+        i = 0;
+    
+    for (; i < len; i++) {
+      if (this._items[i] === comp) {
+        this._items.splice(i, 1);
+        return;
+      }
+    }
+
+    comp.destroy();
+  }
+
+  /**
+   * Public.
+   */
+  removeAll () {
+    var i = this._items.length - 1;
+
+    for (; i >= 0; i--) {
+      this._items[i].destroy();
+    }
+
+    this._items = [];
+  }
+
+  /**
+   * Public.
+   */
+  destroy () {
+    this.removeAll();
+    super.destroy();
+  }
 }
 
 ComponentManager.register(Panel, 'panel');

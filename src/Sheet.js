@@ -138,6 +138,8 @@ class Sheet extends Panel {
       modalEl.destroy();
       modalEl = undefined;
     }
+
+    super._afterDestroy();
   }
 }
 

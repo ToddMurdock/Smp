@@ -125,13 +125,13 @@ class Component extends Box {
    * Private.
    */
   _afterDestroy () {
-    super._afterDestroy();
-
     this._binder.destroy();
 
     if (this._owner && this._owner.remove) {
       this._owner.remove(this);
     }
+
+    super._afterDestroy();
   }
 }
 

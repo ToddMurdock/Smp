@@ -5,6 +5,10 @@ class Container extends Component {
    * layout
    */
 
+  /**
+   * Private.
+   * @param {Object} config
+   */
   constructor (config) {
     super(config);
 
@@ -97,6 +101,29 @@ class Container extends Component {
         return;
       }
     }
+
+    comp.destroy();
+  }
+
+  /**
+   * Public.
+   */
+  removeAll () {
+    var i = this._items.length - 1;
+
+    for (; i >= 0; i--) {
+      this._items[i].destroy();
+    }
+
+    this._items = [];
+  }
+
+  /**
+   * Public.
+   */
+  destroy () {
+    this.removeAll();
+    super.destroy();
   }
 }
 
