@@ -76,11 +76,19 @@ class Element {
 
   /**
    * Public
-   * @param {String} key
-   * @param {String} value
+   * @param {String/Object} key
+   * @param {String} value (Optional)
    */
   setStyle (key, value) {
     Dom.setStyle(this.dom, key, value);
+  }
+
+  /**
+   * Public
+   * @param {String} key
+   */
+  getStyle (key) {
+    return Dom.getStyle(this.dom, key);
   }
 
   /**

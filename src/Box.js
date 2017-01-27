@@ -4,6 +4,7 @@ class Box {
    * CONFIG
    * {String} cls
    * {Object} data
+   * {Boolean} hidden
    * {String} html
    * {Boolean} fullscreen
    * {String} tpl
@@ -23,6 +24,13 @@ class Box {
    */
   getInitialConfig () {
     return this._config.getInitialConfig();
+  }
+
+  /**
+   * Public.
+   */
+  getBox () {
+    return this._el.getBox();
   }
 
   /**
@@ -80,6 +88,32 @@ class Box {
 
   /**
    * Public.
+   * {Boolean} hidden
+   */
+  setHidden (hidden) {
+    if (hidden === this.getHidden()) {
+      return false;
+    }
+
+    this._config.set('hidden', hidden);
+
+    if (this._rendered) {
+      if (hidden) {
+        this.addCls('smp-hidden');
+      } else {
+        this.removeCls('smp-hidden');
+      }
+    }
+
+    return true;
+  }
+
+  getHidden () {
+    return this._config.get('hidden');
+  }
+
+  /**
+   * Public.
    * @param {String} html
    */
   setHtml (html) {
@@ -95,13 +129,6 @@ class Box {
   }
 
   /**
-   * Public.
-   */
-  getBox () {
-    return this._el.getBox();
-  }
-
-  /**
    * Public
    * @param {Number} [width]
    * @param {Number} [height]
@@ -111,6 +138,23 @@ class Box {
       this._el.setSize(width, height);
       this._onResize();
     }
+  }
+
+  /**
+   * Public.
+   * @param {Object/String} key
+   * @param {String} value (Optional)
+   */
+  setStyle (key, value) {
+    this._el.setStyle(key, value);
+  }
+
+  /**
+   * Public.
+   * @param {String} key
+   */
+  getStyle (key) {
+    return this._el.getStyle(key);
   }
 
   /**
@@ -142,10 +186,12 @@ class Box {
         configCls = this.getConfig('cls'),
         configStyle = this.getConfig('style'),
         fullscreen = this.getConfig('fullscreen'),
+        hidden = this.getConfig('hidden'),
         style = configStyle || '';
 
     cls += configCls ? ' ' + configCls : '';
     cls += fullscreen ? ' smp-fullscreen' : '';
+    cls += hidden ? ' smp-hidden' : '';
 
     return {
       cls: cls,

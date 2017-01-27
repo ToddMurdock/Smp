@@ -38,6 +38,17 @@ class Component extends Box {
   }
 
   /**
+   * Override.
+   * Public.
+   * {Boolean} hidden
+   */
+  setHidden (hidden) {
+    if (super.setHidden(hidden)) {
+      this._publish('hidden', hidden);
+    }
+  }
+
+  /**
    * @param {Object} config
    */
   constructor (config) {
@@ -76,30 +87,26 @@ class Component extends Box {
         handler, scope;
 
     if (listeners) {
-      if (listeners.scope) {
-        scope = listeners.scope;
-      }
+      scope = listeners.scope;
 
       for (var key in listeners) {
-        if (key !== 'scope') {
-          handler = listeners[key];
-
-          if (scope) {
-            if (typeof handler === 'function') {
-              handler = handler.bind(scope);
-            }
-
-            if (typeof handler === 'string') {
-              handler = scope[handler].bind(scope);
-            }
-          }
-
-          else {
-            handler = this._getListenerHandler(handler);
-          }
-
-          this.on(key, handler);
+        if (key === 'scope') {
+          continue;
         }
+
+        handler = listeners[key];
+
+        if (scope) {
+          if (typeof handler === 'function') {
+            handler = handler.bind(scope);
+          } else if (typeof handler === 'string') {
+            handler = scope[handler].bind(scope);
+          }
+        } else {
+          handler = this._getListenerHandler(handler);
+        }
+
+        this.on(key, handler);
       }
     }
   }

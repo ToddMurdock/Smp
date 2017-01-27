@@ -147,11 +147,26 @@ class Dom {
   /**
    * Public
    * @param {HTMLElement} element
-   * @param {String} key
-   * @param {String} value
+   * @param {String/Object} key
+   * @param {String} value (Optional)
    */
   static setStyle (element, key, value) {
-    element.style[key] = value;
+    if (typeof key === 'object') {
+      for (var prop in key) {
+        element.style[prop] = key[prop];
+      }
+    } else {
+      element.style[key] = value;
+    }
+  }
+
+  /**
+   * Public.
+   * @param {HTMLElement} element
+   * @param {String} key
+   */
+  static getStyle (element, key) {
+    return element.style[key];
   }
 
   /**
