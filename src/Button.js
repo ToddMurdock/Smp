@@ -2,6 +2,7 @@ class Button extends Component {
 
   /**
    * {Boolean} allowDepress
+   * {Boolean} disabled
    * {Function} handler
    * {String} iconCls
    * {Boolean} pressed
@@ -9,6 +10,32 @@ class Button extends Component {
    * {String} text
    * {String} toggleGroup
    */
+
+  /**
+   * Public.
+   * @param {Boolean} disabled
+   */
+  setDisabled (disabled) {
+    var oldValue = this.getConfig('disabled');
+
+    if (disabled !== oldValue) {
+      var dom = this._el.dom;
+
+      this._config.set('disabled', disabled);
+
+      if (this._rendered) {
+        if (disabled) {
+          Dom.addCls(dom, 'smp-disabled');
+        } else {
+          Dom.removeCls(dom, 'smp-disabled');
+        }
+      }
+    }
+  }
+
+  getDisabled () {
+    return this.getConfig('disabled') || false;
+  }
 
   /**
    * Public.
@@ -21,13 +48,13 @@ class Button extends Component {
       this._config.set('iconCls', value);
 
       if (this._rendered) {
-        var el = Dom.select('.icon', this._el.dom);
+        var dom = Dom.select('.icon', this._el.dom);
 
         if (oldValue) {
-          Dom.removeCls(el, oldValue);
+          Dom.removeCls(dom, oldValue);
         }
 
-        Dom.addCls(el, value);
+        Dom.addCls(dom, value);
       }
 
       this._publish('iconCls', value);
@@ -45,8 +72,8 @@ class Button extends Component {
 
     if (value !== oldValue) {
       if (this._rendered) {
-        var el = Dom.select('.text', this._el.dom);
-        el.innerHTML = value;
+        var dom = Dom.select('.text', this._el.dom);
+        dom.innerHTML = value;
       }
 
       this._publish('text', value);
@@ -148,6 +175,10 @@ class Button extends Component {
    * Private.
    */
   _onClick () {
+    if (this.getDisabled()) {
+      return;
+    }
+
     if (this.enableToggle) {
       this._doToggle();
     } else {
