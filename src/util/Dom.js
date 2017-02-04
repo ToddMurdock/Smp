@@ -56,6 +56,24 @@ class Dom {
 
   /**
    * Public.
+   * @param {HTMLElement} container
+   * @param {HTMLElement} element
+   */
+  static insertBefore (container, element) {
+    container.parentNode.insertBefore(element, container);
+  }
+
+  /**
+   * Public.
+   * @param {HTMLElement} container
+   * @param {HTMLElement} element
+   */
+  static insertAfter (container, element) {
+    container.parentNode.insertBefore(element, container.nextSibling);
+  }
+
+  /**
+   * Public.
    * Returns true if the container contains the element.
    * @param {HTMLElement} container
    * @param {HTMLElement} element
@@ -171,6 +189,10 @@ class Dom {
 
   /**
    * From: github.com/james2doyle/saltjs
+   * @param {String} selector
+   * @param {HTMLElement} context
+   * @returns HTMLCollection/HTMLElement
+   *
    * @usage
   // get by id
   Dom.select('#iddiv');
@@ -203,9 +225,10 @@ class Dom {
     '*': 'querySelectorAll'
     }[selector[0]]; // you can treat a string as an array of characters
     // now pass the selector without the key/first character
-    var el = (((context === undefined) ? document: context)[matches](selector.slice(1)));
+    var el = (((context === undefined) ? document : context)[matches](selector.slice(1)));
     // if there is one element than return the 0 element
-    return ((el.length < 2) ? el[0]: el);
+    // return ((el.length < 2) ? el[0]: el);
+    return el;
   }
 }
 

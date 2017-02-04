@@ -32,6 +32,8 @@ class LayoutCard extends Layout {
   setActiveItem (index) {
     this._config.set('activeItem', index);
     this.doLayout();
+
+    this._owner._publish('activeItem', index);
   }
 
   /**
@@ -49,7 +51,8 @@ class LayoutCard extends Layout {
    */
   _setItemCls (item, index) {
     var activeCls = 'smp-card-active-item',
-        activeIndex = this.getConfig('activeItem') - 1;
+        activeItem = this.getConfig('activeItem'),
+        activeIndex = isNaN(activeItem) ? 0 : activeItem - 1;
 
     item.addCls('smp-card-item');
 

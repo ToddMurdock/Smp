@@ -165,7 +165,7 @@ class Store {
   _processResponse (response) {
     var me = this,
         loadOptions = this._currentLoadOptions,
-        items = response.Items,
+        items = response.Items || response,
         records = (loadOptions.appendData ? me._records : []) || [],
         responseData = [];
 
@@ -245,9 +245,24 @@ class Store {
   }
 
   /**
+   * Private.
+   */
+  _beforeDestroy () {}
+
+  /**
+   * Private.
+   */
+  _afterDestroy () {
+    this._event.destroy();
+    StoreManager.unregisterInstance(this);
+  }
+
+  /**
    * Public.
    */
   destroy () {
-    StoreManager.unregisterInstance(this);
+    this._beforeDestroy();
+    this._emit('destroy', this);
+    this._afterDestroy();
   }
 }

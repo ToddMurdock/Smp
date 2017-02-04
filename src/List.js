@@ -79,8 +79,11 @@ class List extends Component {
     this._el.on('click', this._onElClick.bind(this));
     this._el.on('scroll', this._onScroll.bind(this));
 
-    store.on('datachange', this._onStoreDataChange.bind(this));
-    store.on('load', this._onStoreLoad.bind(this));
+    this._boundOnStoreChange = this._onStoreDataChange.bind(this);
+    store.on('datachange', this._boundOnStoreChange);
+
+    this._boundOnStoreLoad = this._onStoreLoad.bind(this);
+    store.on('load', this._boundOnStoreLoad);
   }
 
   /**
@@ -228,6 +231,15 @@ class List extends Component {
     }
 
     return dom;
+  }
+
+  _beforeDestroy () {
+    var store = this.getStore();
+
+    store.un('datachange', this._boundOnStoreChange);
+    store.un('load', this._boundOnStoreLoad);
+
+    super._beforeDestroy();
   }
 }
 

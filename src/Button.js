@@ -25,9 +25,9 @@ class Button extends Component {
 
       if (this._rendered) {
         if (disabled) {
-          Dom.addCls(dom, 'smp-disabled');
+          Dom.addCls(dom, this.disabledCls);
         } else {
-          Dom.removeCls(dom, 'smp-disabled');
+          Dom.removeCls(dom, this.disabledCls);
         }
       }
     }
@@ -48,7 +48,7 @@ class Button extends Component {
       this._config.set('iconCls', value);
 
       if (this._rendered) {
-        var dom = Dom.select('.icon', this._el.dom);
+        var dom = Dom.select('.icon', this._el.dom)[0];
 
         if (oldValue) {
           Dom.removeCls(dom, oldValue);
@@ -72,7 +72,7 @@ class Button extends Component {
 
     if (value !== oldValue) {
       if (this._rendered) {
-        var dom = Dom.select('.text', this._el.dom);
+        var dom = Dom.select('.text', this._el.dom)[0];
         dom.innerHTML = value;
       }
 
@@ -112,13 +112,18 @@ class Button extends Component {
    */
   constructor (config) {
     super(config);
+
     this.isButton = true;
 
-    if (typeof config.toggleGroup === 'string' && config.toggleGroup !== '') {
+    var toggleGroup = this.getConfig('toggleGroup'),
+        pressed = this.getConfig('pressed');
+
+    if (typeof toggleGroup === 'string' && toggleGroup !== '') {
       this.enableToggle = true;
     }
 
-    this.pressed = config.pressed || undefined;
+    this.disabledCls = 'smp-disabled';
+    this.pressed = pressed;
     this.pressedCls = 'smp-button-pressed';
     this.toggleDisabled;
   }
@@ -137,11 +142,16 @@ class Button extends Component {
    */
   _getRenderData () {
     var data = super._getRenderData(),
-        configCls = this.getConfig('cls'),
+        cls = this.getConfig('cls'),
+        disabled = this.getConfig('disabled'),
         iconCls = this.getConfig('iconCls') || '';
 
-    if (configCls) {
-      data.cls += ' ' + configCls;
+    if (cls) {
+      data.cls += ' ' + cls;
+    }
+
+    if (disabled) {
+      data.cls += ' ' + this.disabledCls;
     }
 
     if (this.pressed) {

@@ -3,6 +3,10 @@
   padding: 10px 15px;
 }
 
+.smp-field-no-label .label {
+  display: none;
+}
+
 .smp-field input {
   font-size: 1em;
   padding: 0.5em 0.4em;

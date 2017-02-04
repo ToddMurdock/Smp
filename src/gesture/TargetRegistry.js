@@ -19,6 +19,28 @@ class TargetRegistry {
 
   /**
    * Public.
+   * @param {Component} target
+   */
+  unRegister (target) {
+    var items = this._registry,
+        len = items.length,
+        i = 0,
+        index;
+    
+    for (; i < len; i++) {
+      if (items[i].target === target) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index !== undefined) {
+      this._registry.splice(index, 1);
+    }
+  }
+
+  /**
+   * Public.
    * @param {TouchEvent} e
    * @return {Object}
    */

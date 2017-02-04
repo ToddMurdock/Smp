@@ -6,14 +6,6 @@ html, body {
   width: 100%;
 }
 
-.smp-disabled {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  filter: alpha(opacity=50);
-  -moz-opacity: 0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.5;
-}
-
 .smp-fullscreen {
   bottom: 0;
   height: 100%;
@@ -23,10 +15,6 @@ html, body {
   right: 0;
   top: 0;
   width: 100%;
-}
-
-.smp-hidden {
-  display: none;
 }
 
 .smp-flex {
@@ -71,4 +59,16 @@ html, body {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.smp-disabled {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+}
+
+.smp-hidden {
+  display: none;
 }

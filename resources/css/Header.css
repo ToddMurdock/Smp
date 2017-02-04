@@ -15,7 +15,12 @@
   padding: 1em;
 }
 
+.smp-header .smp-icon-wrap .smp-icon,
+.smp-header .smp-close {
+  min-width: 1.5em;
+  text-align: center;
+}
+
 .smp-header .smp-close {
   cursor: pointer;
-  padding: 1em;
 }

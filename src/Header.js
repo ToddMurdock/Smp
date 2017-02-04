@@ -96,14 +96,14 @@ class Header {
     renderTo.appendChild(el.dom);
 
     this._el = el;
-    this._titleEl = new Element(Dom.select('.smp-title', el.dom));
+    this._titleEl = new Element(Dom.select('.smp-title', el.dom)[0]);
 
     if (closable) {
-      this._closeEl = new Element(Dom.select('.smp-close', el.dom));
+      this._closeEl = new Element(Dom.select('.smp-close', el.dom)[0]);
     }
 
     if (iconCls) {
-      this._iconEl = new Element(Dom.select('.smp-icon', el.dom));
+      this._iconEl = new Element(Dom.select('.smp-icon', el.dom)[0]);
     }
 
     this._onRender();

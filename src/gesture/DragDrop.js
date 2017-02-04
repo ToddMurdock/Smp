@@ -45,7 +45,7 @@ class DragDrop {
    * @param {Object} config
    * Example:
    * {
-   *   getDragDate: ... {Function}
+   *   getDragData: ... {Function}
    *   source: ... {Component}
    * }
    */
@@ -62,13 +62,22 @@ class DragDrop {
   }
 
   /**
+   * Public.
+   * @param {Component} source
+   */
+  unRegisterSource (source) {
+    this._sourceRegistry.unRegister(source);
+  }
+
+  /**
    * Private.
    * @param {Component} source
    */
   _addDragListeners (source) {
     var el = source.getEl();
 
-    el.on('dragstart', this._onDragStart.bind(this));
+    this._boundOnDragStart = this._onDragStart.bind(this);
+    el.on('dragstart', this._boundOnDragStart);
     // el.on('drag', this._onDrag.bind(this));
     // el.on('dragend', this._onDragEnd.bind(this));
   }
@@ -116,6 +125,14 @@ class DragDrop {
     }
 
     this._targetRegistry.register(config);
+  }
+
+  /**
+   * Public.
+   * @param {Component} target
+   */
+  unRegisterTarget (target) {
+    this._targetRegistry.unRegister(target);
   }
 
   _addDropListeners (target) {

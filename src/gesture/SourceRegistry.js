@@ -18,6 +18,28 @@ class SourceRegistry {
 
   /**
    * Public.
+   * @param {Component} source
+   */
+  unRegister (source) {
+    var items = this._registry,
+        len = items.length,
+        i = 0,
+        index;
+    
+    for (; i < len; i++) {
+      if (items[i].source === source) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index !== undefined) {
+      this._registry.splice(index, 1);
+    }
+  }
+
+  /**
+   * Public.
    * Search the registry for the source element that contains the drag target.
    * @param {TouchEvent} e
    */

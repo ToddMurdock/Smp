@@ -71,7 +71,7 @@ class Panel extends Component {
    */
   _initLayout () {
     this._layout = ComponentManager.create(this.getConfig('layout') || { type: 'column' });
-    this._layout._owner = this;
+    this._layout.init(this);
   }
 
   /**

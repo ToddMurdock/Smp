@@ -15,13 +15,23 @@ class Field extends Component {
    * @param {String} value
    */
   setLabel (value) {
-    var oldValue = this._config.get('label');
+    var oldValue = this._config.get('label'),
+        cls, el;
 
     this._config.set('label', value);
 
     if (value !== oldValue) {
       if (this._rendered) {
-        this._labelEl.update(value)
+        cls = this._noLabelCls;
+        el = this._el;
+
+        if (value) {
+          el.removeCls(cls);
+        } else {
+          el.addCls(cls);
+        }
+
+        this._labelEl.update(value);
       }
 
       this._publish('label', value);
@@ -58,6 +68,8 @@ class Field extends Component {
    */
   constructor (config) {
     super(config);
+
+    this._noLabelCls = 'smp-field-no-label';
     this.isField = true;
   }
 
@@ -68,7 +80,7 @@ class Field extends Component {
   _getRenderTpl () {
     return '<div id="{id}" class="smp-field smp-flex smp-flex-row {cls}" style="{style}">' +
         '<span class="label">{label}</span>' +
-        '<input class="field smp-flex-row-item" type="{inputType}">' +
+        '<input class="input smp-flex-row-item" type="{inputType}">' +
       '</div>';
   }
 
@@ -76,18 +88,23 @@ class Field extends Component {
    * Private.
    */
   _getRenderData () {
-    var data = super._getRenderData();
+    var data = super._getRenderData(),
+        label = this.getConfig('label');
 
-    data.inputType = this.getConfig('inputType'),
-    data.label = this.getConfig('label');
+    if (!label) {
+      data.cls += ' ' + this._noLabelCls;
+    }
+
+    data.inputType = this.getConfig('inputType');
+    data.label = label;
     return data;
   }
 
   _onRender () {
     super._onRender();
 
-    var labelDom = Dom.select('.label', this._el.dom),
-        inputDom = Dom.select('.field', this._el.dom);
+    var labelDom = Dom.select('.label', this._el.dom)[0],
+        inputDom = Dom.select('.input', this._el.dom)[0];
 
     this._labelEl = new Element(labelDom);
     this._inputEl = new Element(inputDom);
