@@ -23,4 +23,5 @@
 
 .smp-header .smp-close {
   cursor: pointer;
+  padding: 1em;
 }

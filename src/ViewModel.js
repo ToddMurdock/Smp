@@ -1,3 +1,15 @@
+/**
+ * @usage
+class MainModel extends ViewModel {
+  constructor () {
+    super({
+      data: {
+        activeCard: 1
+      }
+    });
+  }
+}
+ */
 class ViewModel {
 
   /**
@@ -66,7 +78,7 @@ class ViewModel {
    * @param {Mixed} value
    */
   set (key, value) {
-    var oldValue = this['_' + key];
+    var oldValue = this._data[key];
 
     if (value !== oldValue) {
       this._data[key] = value;
