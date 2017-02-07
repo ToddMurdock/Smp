@@ -52,7 +52,18 @@ class Box {
    * @param {String} cls
    */
   addCls (cls) {
-    this._el.addCls(cls);
+    if (this._rendered) {
+      this._el.addCls(cls);
+    } else {
+      var c = this._config,
+          v = c.get('cls');
+
+      if (v) {
+        cls = v + ' ' + cls;
+      }
+
+      c.set('cls', cls);
+    }
   }
 
   /**
