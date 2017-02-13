@@ -1,6 +1,6 @@
 .smp-field .label {
   font-size: 1em;
-  padding: 10px 15px;
+  margin: 0 0.5em 0 0;
 }
 
 .smp-field-no-label .label {

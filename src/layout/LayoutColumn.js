@@ -1,6 +1,21 @@
 class LayoutColumn extends Layout {
+
+  /**
+   * CONFIG
+   * {String} align
+   */
+
   constructor (config) {
     super(config);
+
+    this._alignOptions = {
+      baseline: 'baseline',
+      center: 'center',
+      end: 'flex-end',
+      start: 'flex-start',
+      stretch: 'stretch'
+    };
+
     this.isLayoutColumn = true;
   }
 
@@ -9,7 +24,14 @@ class LayoutColumn extends Layout {
    * @param {HTMLElement} layoutEl
    */
   _setLayoutElCls (layoutEl) {
-    layoutEl.addCls('smp-flex smp-flex-column');
+    var cls = 'smp-flex smp-flex-column',
+        align = this.getConfig('align');
+
+    if (align && this._alignOptions[align]) {
+      cls += ' smp-flex-align-' + this._alignOptions[align];
+    }
+
+    layoutEl.addCls(cls);
   }
 
   /**

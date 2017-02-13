@@ -5,10 +5,44 @@ class Field extends Component {
 
   /**
    * CONFIG
+   * {Boolean} disabled
    * {String} inputType (mobileinputtypes.com) How input types modify a phones virtual keyboard.
    * {String} label
+   * {String} placeholder
    * {Mixed} value
    */
+
+  /**
+   * Public.
+   * @param {Boolean} disabled
+   */
+  setDisabled (disabled) {
+    var oldValue = this.getConfig('disabled');
+
+    if (disabled !== oldValue) {
+      var dom = this._el.dom,
+          inputDom;
+
+      this._config.set('disabled', disabled);
+
+      if (this._rendered) {
+        inputDom = this._inputEl.dom;
+
+        if (disabled) {
+          Dom.addCls(dom, this.disabledCls);
+          inputDom.setAttribute('disabled', 'disabled');
+          inputDom.blur();
+        } else {
+          Dom.removeCls(dom, this.disabledCls);
+          inputDom.removeAttribute('disabled');
+        }
+      }
+    }
+  }
+
+  getDisabled () {
+    return this.getConfig('disabled') || false;
+  }
 
   /**
    * Public.
@@ -35,6 +69,27 @@ class Field extends Component {
       }
 
       this._publish('label', value);
+    }
+  }
+
+  /**
+   * Public.
+   * @param {Boolean} value
+   */
+  setPlaceholder (value) {
+    var oldValue = this._config.get('placeholder'),
+        dom;
+
+    this._config.set('placeholder', value);
+
+    if (this._rendered) {
+      dom = this._inputEl.dom;
+
+      if (value) {
+        dom.setAttribute('placeholder', value);
+      } else {
+        dom.removeAttribute('placeholder');
+      }
     }
   }
 
@@ -70,6 +125,7 @@ class Field extends Component {
     super(config);
 
     this._noLabelCls = 'smp-field-no-label';
+    this.disabledCls = 'smp-disabled';
     this.isField = true;
   }
 
@@ -78,7 +134,7 @@ class Field extends Component {
   }
 
   _getRenderTpl () {
-    return '<div id="{id}" class="smp-field smp-flex smp-flex-row {cls}" style="{style}">' +
+    return '<div id="{id}" class="smp-field smp-flex smp-flex-row smp-flex-align-center {cls}" style="{style}">' +
         '<span class="label">{label}</span>' +
         '<input class="input smp-flex-row-item" type="{inputType}">' +
       '</div>';
@@ -89,7 +145,12 @@ class Field extends Component {
    */
   _getRenderData () {
     var data = super._getRenderData(),
+        disabled = this.getConfig('disabled'),
         label = this.getConfig('label');
+
+    if (typeof disabled === 'boolean') {
+      this.setDisabled(disabled);
+    }
 
     if (!label) {
       data.cls += ' ' + this._noLabelCls;
@@ -104,10 +165,15 @@ class Field extends Component {
     super._onRender();
 
     var labelDom = Dom.select('.label', this._el.dom)[0],
-        inputDom = Dom.select('.input', this._el.dom)[0];
+        inputDom = Dom.select('.input', this._el.dom)[0],
+        placeholder = this.getConfig('placeholder');
 
     this._labelEl = new Element(labelDom);
     this._inputEl = new Element(inputDom);
+
+    if (placeholder) {
+      this.setPlaceholder(placeholder);
+    }
   }
 
   /**
@@ -116,14 +182,31 @@ class Field extends Component {
   _initEvents () {
     super._initEvents();
     this._inputEl.on('change', this._onChange.bind(this));
+    this._inputEl.on('input', this._onInput.bind(this));
   }
 
   /**
    * Private.
    */
   _onChange (event) {
+    if (this.getDisabled()) {
+      return;
+    }
+
     var value = event.target.value;
     this._emit('change', this, value, event);
+  }
+
+  /**
+   * Private.
+   */
+  _onInput (event) {
+    if (this.getDisabled()) {
+      return;
+    }
+
+    var value = event.target.value;
+    this._emit('input', this, value, event);
   }
 
   _beforeDestroy () {

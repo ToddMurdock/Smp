@@ -25,6 +25,26 @@ html, body {
   display: flex;
 }
 
+.smp-flex-align-baseline {
+  align-items: baseline;
+}
+
+.smp-flex-align-center {
+  align-items: center;
+}
+
+.smp-flex-align-end {
+  align-items: flex-end;
+}
+
+.smp-flex-align-start {
+  align-items: flex-start;
+}
+
+.smp-flex-align-stretch {
+  align-items: stretch;
+}
+
 .smp-flex-column {
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
