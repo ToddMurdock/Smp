@@ -8,7 +8,10 @@ class Field extends Component {
    * {Boolean} disabled
    * {String} inputType (mobileinputtypes.com) How input types modify a phones virtual keyboard.
    * {String} label
+   * {Regular Expression} pattern
+   * {Number} maxlength
    * {String} placeholder
+   * {String} title
    * {Mixed} value
    */
 
@@ -96,13 +99,14 @@ class Field extends Component {
   /**
    * Public.
    * @param {String} value
+   * @param {Boolean} forceValue (Optional) Internal use only.
    */
-  setValue (value) {
+  setValue (value, forceValue) {
     var oldValue = this._config.get('value');
 
     this._config.set('value', value);
 
-    if (value !== oldValue) {
+    if (forceValue || value !== oldValue) {
       if (this._rendered) {
         this._inputEl.dom.value = value;
       }
@@ -134,10 +138,32 @@ class Field extends Component {
   }
 
   _getRenderTpl () {
-    return '<div id="{id}" class="smp-field smp-flex smp-flex-row smp-flex-align-center {cls}" style="{style}">' +
+    return '<div id="{id}" class="smp-field {cls}" style="{style}">' +
         '<span class="label">{label}</span>' +
-        '<input class="input smp-flex-row-item" type="{inputType}">' +
+        '<input class="input" {attributes} />' +
       '</div>';
+  }
+
+  _getInputAttributes () {
+    var inputType = this.getConfig('inputType'),
+        maxlength = this.getConfig('maxlength'),
+        pattern = this.getConfig('pattern'),
+        title = this.getConfig('title'),
+        value = 'type="' + inputType + '"';
+
+    if (maxlength) {
+      value += ' maxlength="' + maxlength + '"';
+    }
+
+    if (pattern) {
+      value += ' pattern="' + pattern + '"';
+    }
+
+    if (title) {
+      value += ' title="' + title + '"';
+    }
+
+    return value;
   }
 
   /**
@@ -156,7 +182,7 @@ class Field extends Component {
       data.cls += ' ' + this._noLabelCls;
     }
 
-    data.inputType = this.getConfig('inputType');
+    data.attributes = this._getInputAttributes();
     data.label = label;
     return data;
   }
@@ -166,13 +192,18 @@ class Field extends Component {
 
     var labelDom = Dom.select('.label', this._el.dom)[0],
         inputDom = Dom.select('.input', this._el.dom)[0],
-        placeholder = this.getConfig('placeholder');
+        placeholder = this.getConfig('placeholder'),
+        value = this.getConfig('value');
 
     this._labelEl = new Element(labelDom);
     this._inputEl = new Element(inputDom);
 
     if (placeholder) {
       this.setPlaceholder(placeholder);
+    }
+
+    if (value) {
+      this.setValue(value, true);
     }
   }
 
@@ -211,6 +242,7 @@ class Field extends Component {
 
   _beforeDestroy () {
     super._beforeDestroy();
+    this._labelEl.destroy();
     this._inputEl.destroy();
   }
 }

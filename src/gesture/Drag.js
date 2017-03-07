@@ -2,7 +2,7 @@
  * github.com/giraysam/viiny-dragger/blob/master/src/index.js
  * 
  * @usage
-var draggable = new WindowDrag({
+var draggable = new Drag({
   element: aElement
 });
  */
@@ -107,8 +107,8 @@ class Drag {
   destroy () {
     this.handle.clearListeners();
 
-    if (this._bodyEl) {
-      this._bodyEl.clearListeners();
+    if (this._docEl) {
+      this._docEl.clearListeners();
     }
   }
 }

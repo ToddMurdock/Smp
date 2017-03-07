@@ -173,12 +173,22 @@ class Box {
    * @param {Object} config
    */
   constructor (config) {
+    config = this._initConfig(config);
+
     this._config = new Config(config);
     this._event = new Event();
     this._id = ComponentManager.id();
 
     this.isBox = true;
     ComponentManager.registerInstance(this);
+  }
+
+  /**
+   * Private.
+   * @param {Object} config
+   */
+  _initConfig (config) {
+    return config;
   }
 
   _getBaseCls () {

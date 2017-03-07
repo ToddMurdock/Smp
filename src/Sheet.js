@@ -8,12 +8,13 @@ class Sheet extends Panel {
 
   /**
    * Public.
+   * @param {HTMLElement} target Optional.
    */
-  show () {
+  show (target) {
     var me = this,
         side = me.getConfig('side');
 
-    me.render();
+    me.render(target);
 
     // Safari fix
     setTimeout(function () {
@@ -25,6 +26,8 @@ class Sheet extends Panel {
    * Private.
    */
   constructor (config) {
+    config = config || {};
+
     if (typeof config.closable !== 'boolean') {
       config.closable = true;
     }

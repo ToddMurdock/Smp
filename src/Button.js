@@ -6,6 +6,7 @@ class Button extends Component {
    * {Function} handler
    * {String} iconCls
    * {Boolean} pressed
+   * {Boolean} repeat
    * {Object} scope
    * {String} text
    * {String} toggleGroup
@@ -178,7 +179,15 @@ class Button extends Component {
    */
   _initEvents () {
     super._initEvents();
-    this._el.on('click', this._onClick.bind(this));
+
+    if (this.getConfig('repeat')) {
+      new ClickRepeater({
+        el: this._el,
+        handler: this._onClick.bind(this)
+      });
+    } else {
+      this._el.on('click', this._onClick.bind(this));
+    }
   }
 
   /**

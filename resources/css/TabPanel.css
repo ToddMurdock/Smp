@@ -1,10 +1,13 @@
-.smp-panel {
+.smp-tabpanel {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+}
 
+.smp-tabpanel .tab-position-bottom,
+.smp-tabpanel .tab-position-top {
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -14,8 +17,18 @@
   flex-direction: column;
 }
 
-.smp-panel .smp-body {
-  background-color: #fff;
+.smp-tabpanel .tab-position-left,
+.smp-tabpanel .tab-position-right {
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.smp-tabpanel .smp-tab-body {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   -webkit-flex: 1;

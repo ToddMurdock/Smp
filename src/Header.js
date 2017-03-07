@@ -3,10 +3,19 @@ class Header {
   /**
    * CONFIG
    * {Boolean} closable
+   * {String} closeIconCls
    * {String} iconCls
    * {Element} renderTo
    * {String} title
    */
+
+  /**
+   * Override to implement the iconCls for the close button.
+   * Example: Header.getCloseIconCls = function () { return '...'; }
+   */
+  static getCloseIconCls () {
+    return '';
+  }
 
   /**
    * Public.
@@ -83,13 +92,14 @@ class Header {
   render () {
     var template = new Template(),
         closable = this.getConfig('closable'),
+        closeIconCls = this.getConfig('closeIconCls') || Header.getCloseIconCls(),
         iconCls = this.getConfig('iconCls'),
         renderTo = this.getConfig('renderTo'),
         data = { title: this.getConfig('title') },
-        tpl = '<div class="smp-header smp-flex smp-flex-row">' +
+        tpl = '<div class="smp-header">' +
                 (iconCls ? '<div class="smp-icon-wrap"><div class="smp-icon ' + iconCls + '"></div></div>' : '') +
-                '<div class="smp-title smp-flex-row-item">{title}</div>' +
-                (closable ? '<div class="smp-close fa fa-times"></div>' : '') +
+                '<div class="smp-title">{title}</div>' +
+                (closable ? '<div class="smp-close ' + closeIconCls + '"></div>' : '') +
               '</div>',
         el = new Element(template.apply(tpl, data));
 

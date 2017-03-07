@@ -7,9 +7,9 @@ class TextAreaField extends Field {
    */
 
   _getRenderTpl () {
-    return '<div id="{id}" class="smp-field smp-flex smp-flex-row smp-flex-align-center {cls}" style="{style}">' +
+    return '<div id="{id}" class="smp-field {cls}" style="{style}">' +
         '<span class="label">{label}</span>' +
-        '<textarea class="input smp-flex-row-item" cols="{cols}" rows="{rows}"></textarea>' +
+        '<textarea class="input" cols="{cols}" rows="{rows}"></textarea>' +
       '</div>';
   }
 

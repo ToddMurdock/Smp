@@ -39,20 +39,10 @@ class TabPanel extends Component {
   }
 
   _doLayout () {
-    var tabPosition = this.getConfig('tabPosition'),
-        bodyCls = 'smp-tab-body',
-        elCls = 'smp-flex';
+    var tabPosition = this.getConfig('tabPosition');
 
-    if (tabPosition === 'top' || tabPosition === 'bottom') {
-      bodyCls += ' smp-flex-column-item';
-      elCls += ' smp-flex-column';
-    } else {
-      bodyCls += ' smp-flex-row-item';
-      elCls += ' smp-flex-row';
-    }
-
-    this._tabBody.addCls(bodyCls);
-    this._el.addCls(elCls);
+    this._tabBody.addCls('smp-tab-body');
+    this._el.addCls('tab-position-' + tabPosition);
   }
 
   /**

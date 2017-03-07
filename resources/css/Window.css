@@ -18,6 +18,20 @@
   left: calc(50%);
   position: absolute;
   top: calc(50%);
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .smp-window .smp-header {
@@ -34,4 +48,13 @@
 .smp-window .smp-header .smp-close {
   cursor: pointer;
   padding: 1em;
+}
+
+.smp-window .smp-body {
+  background-color: #fff;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }

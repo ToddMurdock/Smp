@@ -4,6 +4,7 @@ class Panel extends Component {
    * CONFIG
    * {String} bodyStyle
    * {Boolean} closable
+   * {Object} headerConfig
    * {String} iconCls
    * {Components[]} items
    * {Layout/Layout Config} layout
@@ -93,12 +94,23 @@ class Panel extends Component {
    */
   _renderHeader () {
     var closable = this.getConfig('closable'),
-        header = new Header({
-          closable: closable,
-          iconCls: this.getConfig('iconCls'),
-          renderTo: this._el,
-          title: this.getConfig('title')
-        });
+        cfg = this.getConfig('headerConfig') || {},
+        header;
+
+    if (!cfg.iconCls) {
+      cfg.iconCls = this.getConfig('iconCls');
+    }
+
+    if (!cfg.title) {
+      cfg.title = this.getConfig('title');
+    }
+
+    Object.assign(cfg, {
+      closable: closable,
+      renderTo: this._el
+    });
+
+    header = new Header(cfg);
 
     if (closable) {
       header.on('closeclick', this._onCloseClick.bind(this));
@@ -174,9 +186,6 @@ class Panel extends Component {
    * Private.
    */
   _doLayout () {
-    this._el.addCls('smp-flex smp-flex-column');
-    this._bodyEl.addCls('smp-flex-column-item');
-
     if (this._items) {
       this._layout.doLayout();
     }

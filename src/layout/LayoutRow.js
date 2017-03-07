@@ -39,8 +39,18 @@ class LayoutRow extends Layout {
    * @param {Component} item
    */
   _setItemCls (item) {
-    if (item.getInitialConfig().flex) {
-      item.addCls('smp-flex-row-item');
+    var flex = item.getInitialConfig().flex;
+
+    item.addCls('smp-flex-row-item');
+
+    if (flex) {
+      item.setStyle({
+        '-webkit-box-flex': flex,
+        '-moz-box-flex': flex,
+        '-webkit-flex': flex,
+        '-ms-flex': flex,
+        'flex': flex
+      });
     }
   }
 }

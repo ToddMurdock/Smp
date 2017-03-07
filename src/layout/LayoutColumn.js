@@ -39,8 +39,18 @@ class LayoutColumn extends Layout {
    * @param {Component} item
    */
   _setItemCls (item) {
-    if (item.getInitialConfig().flex) {
-      item.addCls('smp-flex-column-item');
+    var flex = item.getInitialConfig().flex;
+
+    item.addCls('smp-flex-column-item');
+
+    if (flex) {
+      item.setStyle({
+        '-webkit-box-flex': flex,
+        '-moz-box-flex': flex,
+        '-webkit-flex': flex,
+        '-ms-flex': flex,
+        'flex': flex
+      });
     }
   }
 }

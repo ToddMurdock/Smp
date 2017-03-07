@@ -1,4 +1,30 @@
+.smp-field {
+  align-items: center;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+
+  min-width: 20px;
+}
+
 .smp-field .label {
+  -webkit-box-flex: 0 0 auto;
+  -moz-box-flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+
   font-size: 1em;
   margin: 0 0.5em 0 0;
 }
@@ -8,6 +34,17 @@
 }
 
 .smp-field input {
+  outline: none;
+}
+
+.smp-field .input {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+
   font-size: 1em;
+  min-width: 10px;
   padding: 0.5em 0.4em;
 }

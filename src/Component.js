@@ -82,7 +82,10 @@ class Component extends Box {
    */
   _initEvents () {
     super._initEvents();
+    this._initListeners();
+  }
 
+  _initListeners () {
     var listeners = this.getConfig('listeners'),
         handler, scope;
 
