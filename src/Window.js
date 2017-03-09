@@ -16,6 +16,8 @@ class Window extends Panel {
    * Private.
    */
   constructor (config) {
+    config = config || {};
+
     Object.assign(config, {
       closable: true,
       draggable: true,
